@@ -3,17 +3,24 @@ import { UtilsService } from '../../services/utils.service';
 import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {  NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+
+
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule,NgxSpinnerModule],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
 export class AuthComponent {
-  authFirebase = inject(AuthService)
+  authService = inject(AuthService)
   utilSvc = inject(UtilsService)
+  
+  spinner = inject(NgxSpinnerService);
+
+  loading:boolean = true;
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -21,17 +28,23 @@ export class AuthComponent {
   })
 
   async submit() {
-/*
-    await this.authFirebase.login(this.form.value.email!, this.form.value.password!, () => {
-      this.utilSvc.goto(this.pathExito)
+    this.spinner.show();
+    try
+    {
+      await this.authService.logIn(this.form.value.email!, this.form.value.password!) 
+      this.utilSvc.goto("home/mainh");
+    }
+    catch
+    {
+      console.log("credenciales incorrectas");
+    }
      
-    })
-
-
+    this.spinner.hide();
     //const res = this.localStorage.login(this.formLogin.value)?"usuario logeado":"no se encontro el usuario"*/
   }
 
   accesoRapido(email: string, password: string) {
+
     this.form.patchValue({
       email: email,
       password: password

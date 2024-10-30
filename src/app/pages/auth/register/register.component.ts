@@ -4,19 +4,22 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user/user.model';
 import { AuthService } from '../../../services/auth.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule,NgxSpinnerModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
 
   countryList!: any[];
-  utilsService = inject(UtilsService)
-  authService = inject(AuthService)
+  utilsService = inject(UtilsService);
+  authService = inject(AuthService);
+  spinner = inject(NgxSpinnerService);
+
 
   selectedCountry: string | null = null;
   
@@ -62,8 +65,9 @@ export class RegisterComponent {
   }
 
 
-  register()
+  async register()
   {
+    this.spinner.show();
     if(this.form.valid)
     {
       let infoUser;
@@ -86,13 +90,23 @@ export class RegisterComponent {
       }
       //console.log(user);
 
-      this.authService.createNewUser(user,this.form.value.password as string);
+      try
+      {
+        await this.authService.createNewUser(user,this.form.value.password as string);
+        this.utilsService.goto("home/mainh");
+      }
+      catch
+      {
+        console.log("Error al crear usuario")
+      }
 
     }
     else
     {
       console.log("error en el form")
     }
+
+    this.spinner.hide();
   }
 
   checkMedic()

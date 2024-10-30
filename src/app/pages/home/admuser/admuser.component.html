@@ -1,0 +1,75 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-loader" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
+
+<div class="container align-items-center full-height"> 
+
+<div class="row row-cols-1 row-cols-md-3 mb-3">
+
+    <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal text-center">Listado de Usuarios</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mt-3 mb-4">
+                    <li *ngFor="let user of authService.userList" (click)="selectUser(user)">
+                        <h6 class="my-0">{{user.userInfo | userinfo}}</h6>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal text-center">Detalles</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mt-3 mb-4" *ngIf="selectedUser">
+                    <li>
+                        <div class="form-check form-switch">
+                            <input [checked]="selectedUser.userInfo.admin" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
+                            <label class="form-check-label" for="flexSwitchCheckDefault"><h6 class="my-0">Administrador</h6></label>
+                          </div>
+                    </li>
+                    <li>
+                        <h6 class="my-0">Edad: {{selectedUser.userInfo.age | age}}</h6>
+                    </li>
+                    <li>
+                        <h6 class="my-0">DNI: {{selectedUser.userInfo.dni}}</h6>
+                    </li>
+
+                    <li *ngIf="selectedUser.userInfo.medic">
+                        <h6 class="my-0">Especialidades:</h6>
+                        <ul class="list-unstyled mt-3 mb-4">
+                            <li style="background-color: #f8f9fa;" *ngFor="let especialidad of selectedUser.userInfo.info">{{especialidad}}</li>
+                        </ul>
+                    </li>
+
+                    <li *ngIf="selectedUser.userInfo.medic">
+                        <div class="form-check form-switch">
+                            <input [checked]="selectedUser.active" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" (change)="disableAccount()">
+                            <label class="form-check-label" for="flexSwitchCheckDefault"><h6 class="my-0">Habilitar Cuenta</h6></label>
+                          </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal text-center">Registrar un Administrador</h4>
+            </div>
+            <div class="card-body">
+               <app-adminregister></app-adminregister>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</div>

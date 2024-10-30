@@ -6,8 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class UserinfoPipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(value: any, ...args: unknown[]): unknown {
+    const userInfo = `${value.mail} | ${value.name} ${value.surename}`
+    return userInfo;
   }
 
 }

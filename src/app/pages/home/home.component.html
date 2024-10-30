@@ -1,1 +1,36 @@
-<p>home works!</p>
+<div class="carousel">
+  <div class="carousel-inner">
+
+      <div class="carousel-item active" *ngIf="slide==1">
+        <div class="overlay">
+          <h1>Clinica </h1>
+          <p class="lead"> Clinica es un centro médico dedicado a brindar atención médica de calidad,
+               con un enfoque personalizado y centrado en el paciente. Nuestro equipo de profesionales
+               altamente calificados se compromete a ofrecer soluciones integrales para tu bienestar.</p>
+          <p class="lead" style="text-align: center;"><strong>Tu salud, en las mejores manos.</strong></p>
+        </div>
+        <img src="assets/clinicas.jpg" alt="Slide 3">
+      </div>
+
+      <div class="carousel-item active" *ngIf="slide==2">
+        <div class="overlay">
+          <h1>Turnos on-line</h1>
+          <p class="lead"> Inicia sesión en la página y saca turno para las distintas espaecialidades en todos los sanatorios.</p>
+          <div class="d-flex justify-content-center"><button class="btn btn-lg btn-light fw-bold border bg-white" (click)="router.goto('auth')">Iniciar Sesión</button></div>
+        </div>
+        <img src="assets/clinicas.jpg" alt="Slide 3">
+      </div>
+
+      <div class="carousel-item active" *ngIf="slide==3">
+        <div class="overlay">
+          <h1>Turnos on-line</h1>
+          <p class="lead"> Registrate en la página y saca turno para las distintas espaecialidades en todos los sanatorios.</p>
+          <div class="d-flex justify-content-center"><button class="btn btn-lg btn-light fw-bold border bg-white" (click)="router.goto('auth/register')">Registrarse</button></div>
+        </div>
+         <img src="assets/clinicas.jpg" alt="Slide 3">
+      </div>
+
+  </div>
+  <button class="carousel-control prev" id="prevBtn" (click)="before()">❮</button>
+  <button class="carousel-control next" id="nextBtn" (click)="next()">❯</button>
+</div>
