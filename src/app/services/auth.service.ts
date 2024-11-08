@@ -1,11 +1,13 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, inject, Injectable } from '@angular/core';
 import { User } from '../models/user/user.model';
 import { Auth, createUserWithEmailAndPassword,signInWithEmailAndPassword, getAuth, user, signOut } from '@angular/fire/auth';
 import { doc, getFirestore, setDoc, getDoc, collection, getDocs,updateDoc } from '@angular/fire/firestore';
-import { onAuthStateChanged } from '@firebase/auth';
+import { getDownloadURL, getStorage, ref, uploadBytes } from '@angular/fire/storage';
+import { onAuthStateChanged, sendEmailVerification } from '@firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Firestore } from '@angular/fire/firestore/lite';
 import { Observable, Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { UtilsService } from './utils.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +17,14 @@ export class AuthService {
 
   loggedUser: any;
   userProfile?: User | null;
+  userActive:boolean = false;
   userList:any[] = [];
   user$ : Observable<any>;
   userSub = new Subject<any>();
+
+  toastSvc = inject(ToastrService);
+  router = inject(UtilsService);
+  storage = getStorage();
 
   constructor(private _auth: Auth ) {
 
@@ -27,7 +34,8 @@ export class AuthService {
         if (user) {
           this.loggedUser = user
           this.userSub.next(user);
-          console.log("usuario logueado");
+          this.getUserInfo(this.loggedUser.email);
+          console.log(this.loggedUser.email);
         } else {
           this.loggedUser = null
           this.userSub.next(null);
@@ -108,6 +116,11 @@ export class AuthService {
     return userData;
   }
 
+  async savePhoto(photo: any, path: string) {
+    let storageRef = ref(this.storage, path);
+    await uploadBytes(storageRef, photo)
+    return await getDownloadURL(storageRef)
+  }
 
 
   async logIn(mail: string, password: string)
@@ -115,10 +128,24 @@ export class AuthService {
     try
     {
       await signInWithEmailAndPassword(this._auth,mail,password).then(async res => {
-        this.loggedUser = res.user;
-        console.log(this.loggedUser);
-        await this.getUserInfo(mail);
-        console.log(this.userProfile);
+        if(!this.loggedUser.emailVerified && !this.userProfile?.admin)
+          {
+            sendEmailVerification(res.user)
+            this.toastSvc.error("Se le envio un email para verificar su correo", "email no verificado");
+          this.logout(true)
+        }
+        else if(!this.userActive)
+          {
+            this.toastSvc.error("Comuniquese con su administrador de sistemas", "cuenta desactivada");
+            this.logout(true);
+          }else
+          {
+            this.loggedUser = res.user;
+            //console.log(this.loggedUser);
+            await this.getUserInfo(mail);
+            //console.log(this.userProfile);
+            console.log(this.loggedUser.emailVerified);
+        }
 
       })
     }
@@ -135,6 +162,7 @@ export class AuthService {
           console.log("usuario deslogeado")
         }
         this.loggedUser = null
+        this.router.goto("home");
       })
       .catch(() => {
         console.log("error en el deslogueo")
@@ -166,6 +194,9 @@ export class AuthService {
           info: data["userInfo"].info as string[], // Assuming info is a string array
           image: data["userInfo"].image as string[], // Assuming image is a string array
         };
+
+        this.userActive = data["active"] as boolean;
+
       } else {
         console.log('No such document!');
         this.userProfile = null; // Set userProfile to null if the document doesn't exist

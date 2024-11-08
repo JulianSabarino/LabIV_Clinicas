@@ -13,5 +13,13 @@ export const routes: Routes = [
     {
         path: 'mainh',
         loadComponent: ()=> import('../home/mainh/mainh.component').then(m=>m.MainhComponent)
+    },
+    {
+        path: 'getturn',
+        loadComponent: ()=> import('../home/turnasker/turnasker.component').then(m=>m.TurnaskerComponent)
+    },
+    {
+        path: 'myturns',
+        loadChildren: ()=> import('../home/myturns/myturns.routes').then(m=>m.routes)
     }
 ];

@@ -5,11 +5,12 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { UserinfoPipe } from '../../../pipes/userinfo.pipe';
 import { AgePipe } from '../../../pipes/age.pipe';
 import { AdminregisterComponent } from '../../../components/adminregister/adminregister.component';
+import { TurndategeneratorComponent } from '../../../components/turndategenerator/turndategenerator.component';
 
 @Component({
   selector: 'app-admuser',
   standalone: true,
-  imports: [CommonModule,NgxSpinnerModule,UserinfoPipe,AgePipe,AdminregisterComponent],
+  imports: [CommonModule,NgxSpinnerModule,UserinfoPipe,AgePipe,AdminregisterComponent,TurndategeneratorComponent],
   templateUrl: './admuser.component.html',
   styleUrl: './admuser.component.scss'
 })

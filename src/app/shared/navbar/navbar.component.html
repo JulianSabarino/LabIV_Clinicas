@@ -1,12 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="authService.loggedUser">
-    <a class="navbar-brand" style="margin-left: 1vh;">Clinica</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" (click)="authService.logout()" >Log Out</a>
-        <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin" (click)="router.goto('home/admuser')">Administración de Usuarios</button>
-      </div>
+  <a class="navbar-brand" style="margin-left: 1vh;">Clinica</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: space-between;">
+    <div class="navbar-nav">
+      <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin"
+        (click)="router.goto('home/admuser')">Administración de Usuarios</button>
+      <button class="nav-item nav-link" *ngIf="authService.userProfile?.medic"
+        (click)="router.goto('home/myturns/medics')">Mis Turnos</button>
+      <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
+        (click)="router.goto('home/myturns')">Mis Turnos</button>
+      <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
+        (click)="router.goto('home/getturn')">Sacar Turno</button>
     </div>
-  </nav>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" (click)="authService.logout()">Log Out</a>
+    </div>
+  </div>
+</nav>

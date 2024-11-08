@@ -7,11 +7,15 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
+import { provideToastr } from 'ngx-toastr';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimationsAsync(), //loading spinner
+    provideAnimationsAsync(), //loading spinner and toastr
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideToastr({timeOut:4000,preventDuplicates:true}),
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp({
       projectId: "clinicasabarino",
@@ -22,6 +26,7 @@ export const appConfig: ApplicationConfig = {
       messagingSenderId: "1083460240282"
     })),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
   ]
 };

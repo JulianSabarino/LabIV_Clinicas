@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { UtilsService } from '../../../services/utils.service';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user/user.model';
 import { AuthService } from '../../../services/auth.service';
@@ -50,20 +50,33 @@ export class RegisterComponent {
     name: new FormControl('',[Validators.required]),
     surname: new FormControl('',[Validators.required]),
     document: new FormControl('',[Validators.required]),
-    age: new FormControl(''),
+    age: new FormControl('',this.ageMinValidator(18)),
     password: new FormControl('',[Validators.required]),
     obraSocial: new FormControl('',this.obraSocialValidator())
   })
 
   obraSocialValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
+      console.log(control)
       if (!this.isMedic && !control.value) {
         return { required: true }; // Return an error if obraSocial is not filled and isMedic is false
       }
+
       return null; // Return null if the input is valid
     };
   }
 
+  ageMinValidator(minAge: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const birthDate = new Date(control.value);
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+      if (age < minAge) {
+        return { ageMin: true };
+      }
+      return null;
+    };
+  }
 
   async register()
   {
@@ -109,9 +122,21 @@ export class RegisterComponent {
     this.spinner.hide();
   }
 
+  async saveImage(event: any)
+  {
+    const file = event.target.files[0];
+    if (file) {
+      let savedPhoto = await this.authService.savePhoto(file,"userPhotos");
+      
+      console.log(savedPhoto);
+      //this.imagen = file
+  }
+}
+
   checkMedic()
   {
     this.isMedic = !this.isMedic;
+    console.log(this.isMedic)
   }
 
 
