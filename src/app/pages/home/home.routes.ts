@@ -19,7 +19,7 @@ export const routes: Routes = [
         loadComponent: ()=> import('../home/turnasker/turnasker.component').then(m=>m.TurnaskerComponent)
     },
     {
-        path: 'myturns',
-        loadChildren: ()=> import('../home/myturns/myturns.routes').then(m=>m.routes)
+        path: 'userturns',
+        loadChildren: ()=> import('../home/userturns/userturn.routes').then(m=>m.routes)
     }
 ];

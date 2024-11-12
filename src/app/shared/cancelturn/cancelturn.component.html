@@ -1,0 +1,15 @@
+<div class="cancel-turn-container container">
+<h2>Turno</h2>
+<div class="cancel-turn-container">
+  <p>Cual es el motivo de la cancelación?</p>
+  <div class="form-group">
+    <label for="cancelComment">Comentario de Cancelación:</label>
+    <input type="text" id="cancelComment" [(ngModel)]="cancelComment" class="form-control" placeholder="Ingrese el motivo">
+  </div>
+  <div class="button-group">
+    <button class="btn" (click)="noCancelar()">No Cancelar</button>
+    <button class="btn" (click)="cancelar()">Cancelar</button>
+  </div>
+</div>
+
+</div>

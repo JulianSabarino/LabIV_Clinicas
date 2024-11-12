@@ -86,3 +86,17 @@
 .next {
     right: 10px;
 }
+
+.register-img
+{
+    max-width: 15vh;
+    background-color: white;
+    padding: 1vh;
+    border-radius: 5px;
+    margin: 0.5vh;
+}
+
+.register-img:active
+{
+    transform: scale(0.8);
+}

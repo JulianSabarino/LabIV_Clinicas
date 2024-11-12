@@ -1,0 +1,54 @@
+<div class="container">
+    <h1 class="display-5 fw-bold">Especialidades</h1>
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3 div-display">
+ 
+      <div class="container-fluid py-5 film-container">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+
+          <div *ngFor="let especialidad of especialidadesSrv.especialidadesList">
+
+            <div class="col">
+              <div class="card shadow-sm">
+                <img class="bd-placeholder-img card-img-top" width="100%" src="assets/especialidad.jpg" focusable="false">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-body-secondary">{{especialidad.name}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="p-5 mb-4 bg-body-tertiary rounded-3 div-display">
+ 
+      <div class="container-fluid py-5 film-container">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+
+          <div *ngFor="let especialidad of especialidadesSrv.especialidadesList">
+
+            <div class="col">
+              <div class="card shadow-sm">
+                <img class="bd-placeholder-img card-img-top" width="100%" src="assets/especialidad.jpg" focusable="false">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-body-secondary">{{especialidad.name}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>

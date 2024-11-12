@@ -14,6 +14,8 @@ export class ScheduleService {
   satTurns: string[] =
   ["08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00",
   "13:30"];
+
+
   turnList: any[] = [];
 
   constructor() { }
@@ -46,7 +48,12 @@ async generateTurnByDateAndName(date: string, doctor: string, turn:string, patie
     date:date,
     turn:turn,
     doctor:doctor,
-    status: "Pending"
+    status: "Pending",
+    review:
+    {
+      done: false,
+      comment:""
+    }
   })
 }
 
@@ -62,10 +69,33 @@ async getTurns()
     date:doc.data()['date'],
     turn:doc.data()['turn'],
     doctor:doc.data()['doctor'],
-    status:doc.data()['status']   
+    status:doc.data()['status'],
+    review:doc.data()['review']
   })  
 );
   
+}
+
+async leaveReview(turn: any, review: string)
+{
+  let date = this.formatDateToString(turn.date);
+  //console.log(date);
+  let path = `turns/${date}_${turn.turn}_${turn.doctor}`;
+  await updateDoc(doc(getFirestore(),path),
+  {
+    status: "Canceled",
+    review:
+    {
+      done: true,
+      comment:review
+    }
+  })
+}
+
+formatDateToString(strdate: string): string {
+  let cleanedDate = strdate.replace(/\//g, '');
+
+  return cleanedDate;
 }
 
 }

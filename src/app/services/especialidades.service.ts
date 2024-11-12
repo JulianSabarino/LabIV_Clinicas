@@ -26,4 +26,15 @@ export class EspecialidadesService {
     
   }
 
+  async newEspecialidad(especialidad: string)
+  {
+    let path = `especialidades/${especialidad}`;
+  
+    await setDoc(doc(getFirestore(),path),
+    {
+      name:especialidad
+    })
+
+  }
+
 }

@@ -1,0 +1,27 @@
+/* Remove the backdrop */
+.no-backdrop {
+    background: transparent !important; /* Makes the backdrop invisible */
+  }
+  
+  /* Center the dialog and ensure it appears above everything else */
+  .centered-dialog {
+    position: fixed !important;  /* Fixed positioning to ensure it's centered on screen */
+    top: 50% !important;         /* Center vertically */
+    left: 50% !important;        /* Center horizontally */
+    transform: translate(-50%, -50%) !important;  /* Ensure exact centering */
+    max-width: 600px !important; /* Optional: Max width of the dialog */
+    width: 100% !important;      /* Make the dialog responsive */
+    z-index: 1050 !important;    /* Ensure the dialog appears above other elements */
+  }
+  
+  /* Optional: Hide the backdrop if you don't need it */
+  body .cdk-overlay-container .cdk-overlay-backdrop {
+    display: none !important;  /* This hides the backdrop */
+  }
+  
+  /* Optional: Adjust the dialog's surface (optional for further customization) */
+  body .cdk-overlay-container .mat-mdc-dialog-panel .mat-mdc-dialog-surface {
+    background-color: #fff !important;  /* White background for the dialog */
+    border-radius: 8px !important;      /* Optional: Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;  /* Optional: Shadow for the dialog */
+  }

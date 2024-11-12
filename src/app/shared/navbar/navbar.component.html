@@ -8,10 +8,14 @@
     <div class="navbar-nav">
       <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin"
         (click)="router.goto('home/admuser')">Administración de Usuarios</button>
-      <button class="nav-item nav-link" *ngIf="authService.userProfile?.medic"
-        (click)="router.goto('home/myturns/medics')">Mis Turnos</button>
-      <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
-        (click)="router.goto('home/myturns')">Mis Turnos</button>
+     
+      
+        <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
+        (click)="router.goto('home/userturns')">Sacar Turno(Usuarios)</button>
+        <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
+        (click)="router.goto('home/userturns/myturns')">Mis Turno(Usuarios)</button>
+
+
       <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
         (click)="router.goto('home/getturn')">Sacar Turno</button>
     </div>
