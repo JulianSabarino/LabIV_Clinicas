@@ -6,3 +6,11 @@
     outline: none; 
     box-shadow: none;
 }
+
+.grecaptcha-badge
+{
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+}

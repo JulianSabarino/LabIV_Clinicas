@@ -1,0 +1,75 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-loader" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
+
+<div class="container">
+  <h1 class="display-5 fw-bold">Elegir turnos de Trabajo</h1>
+
+  <div class="d-flex w-100 justify-content-center">
+    <div *ngFor="let especialidad of especialitiesService.loggedEspecialities">
+
+      <div class="col">
+        <div class="speciality-card shadow-sm">
+          <img class="bd-placeholder-img card-img-top" src="assets/especialidad.jpg" focusable="false" (click)="selectEspecialidad(especialidad)">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-body-secondary">{{especialidad.name}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<div class="container align-items-center full-height">
+  <div class="row row-cols-1 row-cols-md-1 mb-3">
+
+    <hr class="my-4">
+    
+    <div class="d-flex justify-content-end mb-3">
+      <button class="button-save btn btn-primary" type="button" *ngIf="selectedEspecialidad" (click)="saveSpecialities()">Guardar todos los cambios</button>
+    </div>
+    
+    <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal text-center">Turnos</h4>
+            </div>
+
+            <div class="card-body table-body" *ngIf="selectedEspecialidad">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miércoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>Sábado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let hour of scheduleService.baseTurns">
+                        <td *ngFor="let day of days" [ngClass]="{ 'disabled': !isValidHour(hour, day) }">
+                          <div class="form-check form-switch">
+                            <input [checked]="isWorkHour(hour,day)" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" *ngIf="isValidHour(hour, day)" (change)="addRemoveSpeciality(hour, day)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">{{ hour }}</label>
+                          </div>
+                          
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  <ng-template #disabledCell></ng-template>
+            </div>
+        </div>
+    </div> 
+
+</div>
+
+</div>

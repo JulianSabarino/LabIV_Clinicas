@@ -14,7 +14,12 @@
         (click)="router.goto('home/userturns')">Sacar Turno(Usuarios)</button>
         <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
         (click)="router.goto('home/userturns/myturns')">Mis Turno(Usuarios)</button>
-
+    
+        <button class="nav-item nav-link"
+        (click)="router.goto('home/mypage')">Mi pagina (usuarios)</button>
+        <button class="nav-item nav-link"
+        (click)="router.goto('home/mypage/medic')">Mi pagina (Medicos)</button>
+        
 
       <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
         (click)="router.goto('home/getturn')">Sacar Turno</button>

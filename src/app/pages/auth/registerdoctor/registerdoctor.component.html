@@ -1,5 +1,6 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-loader" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
-  
+<script src="https://www.google.com/recaptcha/api.js?render=reCAPTCHA_site_key"></script>  
+
   <div class="container">
     <div class="py-5 text-center">
       <img class="d-block mx-auto mb-4" src="assets/doctor.jpg" alt="" width="72" height="57">
@@ -79,7 +80,9 @@
                         Valid age name is required.
                     </div>
                 </div>
-
+                <div class="col-sm-6 grecaptcha-badge">
+                  <re-captcha formControlName="recaptchaReactive" (resolved)="resolved($event)" [siteKey]="claveWeb" *ngIf="isCaptchaLoaded"></re-captcha>
+                </div>
           </div>
   
           <hr class="my-4">

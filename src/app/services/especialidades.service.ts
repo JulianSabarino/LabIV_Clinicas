@@ -3,6 +3,8 @@ import { doc, getFirestore, setDoc, getDoc, collection, getDocs,updateDoc } from
 import { onAuthStateChanged, sendEmailVerification } from '@firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Firestore } from '@angular/fire/firestore/lite';
+import { Especialidades } from '../models/user/medicspeciality.model';
+import { User } from '../models/user/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ export class EspecialidadesService {
   constructor() { }
 
   especialidadesList?: any[];
+  loggedEspecialities: Especialidades[] = [];
 
   async getEspecialidadesList()
   {
@@ -25,6 +28,32 @@ export class EspecialidadesService {
   );
     
   }
+  
+  async getLoggedEspecialidadesList(user:any)
+  {
+    let path = `medicInfo/${user.mail}`;
+  
+    let docSnapshot = await getDoc(doc(getFirestore(),path));
+    if(docSnapshot.exists())
+    {
+      let data = docSnapshot.data(); 
+      this.loggedEspecialities = data["specialities"] as Especialidades[]
+    }
+    
+  }
+
+  async updateLoggerdEspecialidades(user:any)
+  {
+    if(this.loggedEspecialities)
+    {
+      let path = `medicInfo/${user.mail}`;
+      await updateDoc(doc(getFirestore(),path),{
+        specialities: this.loggedEspecialities
+      })
+    }
+
+  }
+
 
   async newEspecialidad(especialidad: string)
   {

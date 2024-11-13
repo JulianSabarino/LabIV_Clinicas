@@ -1,16 +1,24 @@
-.container
-{
-    //max-width: 30%;
-    background-color: transparent;
-}
+.disabled {
+    background-color: lightgray;
+    color: lightgray;
+    pointer-events: none;
+  }
 
-.div-display {
+  .table-body
+  {
+    height: 50vh;
+    overflow: scroll;
+  }
+
+  .div-display {
     max-height: 30vh; /* Adjust as needed */
     overflow-y: auto; /* Only scroll vertically */
     background-color: transparent;
 }
 
-.card { 
+
+
+.speciality-card { 
     /* Reduce card height */
     max-height: 150px; /* Adjust as needed */ 
     padding: 1vh;
@@ -27,4 +35,11 @@
 
 .card-body {
     padding: 10px;  /* Adjust padding */ 
+}
+
+.button-save
+{
+  max-width: 40vh;
+  margin: 2vh;
+  border-radius: 2vh;  
 }

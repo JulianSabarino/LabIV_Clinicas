@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { EspecialidadesService } from '../../../services/especialidades.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { AuthService } from '../../../services/auth.service';
+import { user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-userturns',
@@ -32,8 +34,26 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class UserturnsComponent implements OnInit{
   especialidadesSrv = inject(EspecialidadesService);
+  authSrv = inject(AuthService);
+  
+  selectedSpeciality: any;
+  medicList: any[] = [];
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.especialidadesSrv.getEspecialidadesList();
+    this.authSrv.getUserList();
+  }
+
+  selectEspecialidad(especialidad: any)
+  {
+    this.selectedSpeciality=especialidad;
+    this.medicList=[];
+
+    this.authSrv.userList.forEach(user => {
+      if(user.userInfo.medic && user.userInfo.info.includes(especialidad.name))
+        this.medicList?.push(user);  
+    });
+
+    console.log(this.medicList);
   }
 }

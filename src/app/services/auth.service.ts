@@ -8,6 +8,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UtilsService } from './utils.service';
+import { Especialidades } from '../models/user/medicspeciality.model';
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +69,25 @@ export class AuthService {
     })
   }
 
+  async createNewMedic(user:User,password: string, especialidades:Especialidades[])
+  {
+    let alias = await createUserWithEmailAndPassword(this._auth,user.mail as string,password as string).then((userCredential) => {
+      this.loggedUser = userCredential.user;
+      this.userProfile=user;
+
+      this.setUserInfo(this.serializeUser());
+      this.setMedicInfo(user, especialidades)
+
+      console.log(this.loggedUser);
+
+    }).catch
+    (error => {
+
+      console.log(error);
+      throw error;
+    })
+  }
+
   async setUserInfo(user: any)
   {
     let path = `userInfo/${user.mail}`;
@@ -75,6 +95,14 @@ export class AuthService {
     {
       active: !user.medic,
       userInfo:user
+    })
+  }
+
+  async setMedicInfo(user: User,especialidades: Especialidades[])
+  {
+    let path = `medicInfo/${user.mail}`;
+    await setDoc(doc(getFirestore(),path),{
+      specialities: especialidades
     })
   }
   

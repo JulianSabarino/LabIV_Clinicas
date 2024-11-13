@@ -21,5 +21,9 @@ export const routes: Routes = [
     {
         path: 'userturns',
         loadChildren: ()=> import('../home/userturns/userturn.routes').then(m=>m.routes)
+    },
+    {
+        path: 'mypage',
+        loadChildren: ()=> import('../home/mypage/mypage.routes').then(m=>m.routes)
     }
 ];

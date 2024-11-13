@@ -6,11 +6,16 @@ import { AuthService } from '../../../services/auth.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { User } from '../../../models/user/user.model';
 import { EspecialidadesService } from '../../../services/especialidades.service';
+import { Especialidades } from '../../../models/user/medicspeciality.model';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
+import { RechaptchaService } from '../../../services/rechaptcha.service';
+
+
 
 @Component({
   selector: 'app-registerdoctor',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,NgxSpinnerModule],
+  imports: [CommonModule,ReactiveFormsModule,NgxSpinnerModule, RecaptchaModule,RecaptchaFormsModule],
   templateUrl: './registerdoctor.component.html',
   styleUrl: './registerdoctor.component.scss'
 })
@@ -20,31 +25,16 @@ export class RegisterdoctorComponent implements OnInit{
   authService = inject(AuthService);
   specialityService = inject(EspecialidadesService);
   spinner = inject(NgxSpinnerService);
+  captchaSvc = inject(RechaptchaService);
+  claveWeb:string="";
+  isCaptchaLoaded: boolean = false;
 
 
   selectedCountry: string | null = null;
   
   isMedic: boolean = false;
 
-  especialidades:any[] = 
-  [
-    {
-      name: "Veterinario",
-      isChecked: false
-    },
-    {
-      name: "Clinico",
-      isChecked: false
-    },
-    {
-      name: "Osteospatia",
-      isChecked: false
-    },
-    {
-      name: "Psicologia",
-      isChecked: false
-    },
-  ]
+  especialidades:Especialidades[] = []
 
   form = new FormGroup({
     mail: new FormControl('',[Validators.required,Validators.email]),
@@ -53,6 +43,7 @@ export class RegisterdoctorComponent implements OnInit{
     document: new FormControl('',[Validators.required]),
     age: new FormControl('',this.ageMinValidator(18)),
     password: new FormControl('',[Validators.required]),
+    recaptchaReactive:new FormControl('',Validators.required)
   })
 
   ageMinValidator(minAge: number): ValidatorFn {
@@ -70,6 +61,9 @@ export class RegisterdoctorComponent implements OnInit{
   async ngOnInit() {
     this.spinner.show();
     await this.specialityService.getEspecialidadesList();
+    this.claveWeb = this.captchaSvc.captchaGoogle.passwordWeb;
+    console.log(this.claveWeb)
+    this.isCaptchaLoaded = !!this.claveWeb;
     this.spinner.hide();
   }
 
@@ -97,7 +91,7 @@ export class RegisterdoctorComponent implements OnInit{
 
       try
       {
-        await this.authService.createNewUser(user,this.form.value.password as string);
+        await this.authService.createNewMedic(user,this.form.value.password as string,this.especialidades);
         this.utilsService.goto("home/mainh");
       }
       catch
@@ -114,6 +108,7 @@ export class RegisterdoctorComponent implements OnInit{
     this.spinner.hide();
   }
 
+
   async saveImage(event: any)
   {
     const file = event.target.files[0];
@@ -128,8 +123,19 @@ export class RegisterdoctorComponent implements OnInit{
 
   addRemoveSpeciality(especialidad: any) {
     
-    if(especialidad.isChecked) especialidad.isChecked=false;
-    else especialidad.isChecked=true;
+    let esIndex = this.especialidades.findIndex(element => element.name == especialidad.name)
+
+    if (esIndex > -1) {
+      // If the turn exists, remove it
+      this.especialidades.splice(esIndex, 1);
+    } else {
+      // If the turn does not exist, add it
+      let temp: Especialidades = {
+        name:especialidad.name,
+        turns:[]
+      }
+      this.especialidades.push(temp);
+    }
 
     console.log(this.especialidades);
   }
@@ -148,4 +154,12 @@ export class RegisterdoctorComponent implements OnInit{
     }
   }
 
+  resolved(captchaResponse: any) {
+    console.log("entro"+captchaResponse);
+  }
+
+  CaptchaClick()
+  {
+    console.log("soy interactuable");
+  }
 }

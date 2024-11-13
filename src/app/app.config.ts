@@ -1,6 +1,6 @@
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';//Loading spinner
 
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -9,10 +9,14 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { provideToastr } from 'ngx-toastr';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import { ReCaptchaV3Provider } from '@angular/fire/app-check';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withFetch()),
+    importProvidersFrom(ReCaptchaV3Provider),
     provideAnimationsAsync(), //loading spinner and toastr
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideToastr({timeOut:4000,preventDuplicates:true}),

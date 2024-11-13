@@ -33,7 +33,7 @@ export class MyturnsComponent implements OnInit{
   myTurnsList: any[] = []
   cancelComentary: string = "";
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.spinner.show();
 
@@ -53,9 +53,24 @@ export class MyturnsComponent implements OnInit{
 
   async sendReview(turn: any)
   {
-    await this.scheduleSvc.leaveReview(turn,"Me olvide");
+    const dialogRef = this.dialog.open(CancelturnComponent, {
+      backdropClass: 'no-backdrop',  // This will make the backdrop invisible
+      panelClass: 'centered-dialog', // Apply custom class for centering
+      hasBackdrop: false,  // Option
+    });
+    console.log(dialogRef);
+
+    dialogRef.afterClosed().subscribe(async result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        this.cancelComentary  = result;
+        await this.scheduleSvc.leaveReview(turn,this.cancelComentary);
+        console.log(this.cancelComentary);
+      }
+    });
   }
 
+  
   cancelModal()
   {
     const dialogRef = this.dialog.open(CancelturnComponent, {
