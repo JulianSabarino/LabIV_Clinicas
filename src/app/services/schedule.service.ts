@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { doc, getFirestore, setDoc, getDoc, collection, getDocs,updateDoc } from '@angular/fire/firestore';
+import { TurnDetailed } from '../models/user/turn.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,22 +40,19 @@ export class ScheduleService {
   }
 
 
-async generateTurnByDateAndName(date: string, doctor: string, turn:string, patient:string = this.authSvc.userProfile?.mail || 'usuario@default.com')
+async generateTurnByDateAndName(detail:TurnDetailed)
 {
-  let path = `turns/${date}_${turn}_${doctor}`;
+  let path = `turns/${this.formatDateToString(detail.date)}_${detail.turn}_${detail.doctor}`;
   await setDoc(doc(getFirestore(),path),
   {
-    patient: patient,
-    date:date,
-    turn:turn,
-    doctor:doctor,
-    status: "Pending",
-    review:
-    {
-      done: false,
-      comment:""
-    }
-  })
+    date: detail.date,
+    turn: detail.turn,
+    doctor: detail.doctor,
+    patient: detail.patient,
+    speciality: detail.speciality,
+    status: detail.status,
+    review: detail.review
+    })
 }
 
 async getTurns()

@@ -156,6 +156,7 @@ export class AuthService {
     try
     {
       await signInWithEmailAndPassword(this._auth,mail,password).then(async res => {
+        await this.getUserInfo(mail);
         if(!this.loggedUser.emailVerified && !this.userProfile?.admin)
           {
             sendEmailVerification(res.user)
@@ -170,7 +171,6 @@ export class AuthService {
           {
             this.loggedUser = res.user;
             //console.log(this.loggedUser);
-            await this.getUserInfo(mail);
             //console.log(this.userProfile);
             console.log(this.loggedUser.emailVerified);
         }

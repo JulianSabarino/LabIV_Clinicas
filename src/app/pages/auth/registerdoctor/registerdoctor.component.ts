@@ -72,8 +72,10 @@ export class RegisterdoctorComponent implements OnInit{
     this.spinner.show();
     if(this.form.valid)
     {
-      let infoUser;
-      infoUser = this.especialidades;
+      let infoUser: any[] = [];
+      this.especialidades.forEach(element => {
+        infoUser.push(element.name);
+      });
       
       let user: User = 
       {

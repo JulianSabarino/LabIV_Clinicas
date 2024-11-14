@@ -11,10 +11,12 @@ import { provideToastr } from 'ngx-toastr';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { ReCaptchaV3Provider } from '@angular/fire/app-check';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations'
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimations(),
     provideHttpClient(withFetch()),
     importProvidersFrom(ReCaptchaV3Provider),
     provideAnimationsAsync(), //loading spinner and toastr

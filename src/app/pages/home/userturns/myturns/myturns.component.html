@@ -51,7 +51,7 @@
                         </li>
                     </ul>
                     <ul class="list-unstyled mt-3 mb-4">
-                        <button class="w-100 btn btn-primary btn-lg" type="button" *ngIf="turn.status == 'Pending'" (click)="sendReview(turn)">Cancelar</button>
+                        <button class="w-100 btn btn-primary btn-lg" type="button" *ngIf="turn.status == 'Pendiente'" (click)="sendReview(turn)">Cancelar</button>
                         <button mat-button class="w-100 btn btn-primary btn-lg" type="button" *ngIf="(turn.status == 'Done' || turn.status == 'Canceled') && turn.review.done" (click)="cancelModal()">Ver Reseña</button>
                         <button class="w-100 btn btn-primary btn-lg" type="button" *ngIf="(turn.status == 'Done' || turn.status == 'Canceled') && !turn.review.done">Dejar Reseña</button>
                     </ul>

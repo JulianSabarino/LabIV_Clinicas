@@ -5,40 +5,28 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { AuthService } from '../../../services/auth.service';
 import { user } from '@angular/fire/auth';
 import { Especialidades } from '../../../models/user/medicspeciality.model';
+import { ScheduleService } from '../../../services/schedule.service';
+import { TurnDetailed } from '../../../models/user/turn.model';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-userturns',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxSpinnerModule],
   templateUrl: './userturns.component.html',
   styleUrl: './userturns.component.scss',
-  animations:
-  [trigger('openClose', [
-    state('open', style({
-      height: '200px',
-      opacity: 1,
-      backgroundColor: 'green'
-    })),
-  state('closed',style({
-    height: '100px',
-    opacity: 0.8,
-    backgroundColor: 'red'
-  })),
-  transition('open => closed', [
-    animate('2s ease-out')
-  ],),
-  transition('closed => open', [
-    animate('10s')
-  ]),
-  ]),
-],
 })
 export class UserturnsComponent implements OnInit{
   especialidadesSrv = inject(EspecialidadesService);
   authSrv = inject(AuthService);
+  scheduleSrv = inject(ScheduleService);
+  spinner = inject(NgxSpinnerService);
+  toasterSvc = inject(ToastrService);
   
   selectedSpeciality: any;
   selectedMedic:any;
+  selectedTurn:any;
   medicList: any[] = [];
   selectedEspecialidad?: Especialidades;
   formattedTurns: any[] = [
@@ -49,38 +37,40 @@ export class UserturnsComponent implements OnInit{
     }
   ]
 
+
   async ngOnInit() {
     await this.especialidadesSrv.getEspecialidadesList();
     await this.authSrv.getUserList();
-    console.log(this.authSrv.userList);
+    await this.scheduleSrv.getTurns();
+
+    console.log(this.scheduleSrv.turnList);
   }
 
   selectEspecialidad(especialidad: any)
   {
     this.selectedSpeciality=especialidad;
     this.medicList=[];
+    this.formattedTurns = []
+    this.selectedTurn = null;
 
     this.authSrv.userList.forEach(user => {
       if(user.userInfo.medic && user.userInfo.info.includes(especialidad.name))
         this.medicList?.push(user);  
     });
 
-    console.log(this.medicList);
   }
 
   async selectDoctor(doctor: any)
   {
     this.selectedMedic=doctor;
+    this.selectedTurn = null;
 
-    console.log(doctor);
 
     await this.especialidadesSrv.getLoggedEspecialidadesList(doctor.userInfo);
 
-    console.log(this.especialidadesSrv.loggedEspecialities)
 
     this.selectedEspecialidad = this.especialidadesSrv.loggedEspecialities.find(speciality => speciality.name === this.selectedSpeciality.name)
 
-    //console.log(this.selectedEspecialidad);
     this.generateTurnsForNextWeek();
   }
 
@@ -90,7 +80,7 @@ export class UserturnsComponent implements OnInit{
     
     // Generate a date range from today to one week ahead
     let dateRange = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 1; i < 7; i++) {
       let futureDate = new Date(today);
       futureDate.setDate(today.getDate() + i);
       dateRange.push(futureDate);
@@ -101,7 +91,6 @@ export class UserturnsComponent implements OnInit{
     this.formattedTurns = [];
 
     this.selectedEspecialidad?.turns.forEach(turn => {
-      //console.log(turn);
       const dayIndex = daysOfWeek.indexOf(turn.day);
       if (dayIndex !== -1) {
         // Find the corresponding date for the given day
@@ -117,7 +106,62 @@ export class UserturnsComponent implements OnInit{
         }
       }
     });
-    console.log(this.formattedTurns);
+  }
+
+
+  selectTurn(turn: any)
+  {
+    this.selectedTurn = turn;
+  }
+
+  async getTurn()
+  {
+    this.spinner.show()
+    let detail: TurnDetailed = 
+    {
+      date: this.selectedTurn.date,
+      turn: this.selectedTurn.turn,
+      doctor: this.selectedMedic.userInfo.mail,
+      patient: this.authSrv.userProfile?.mail as string,
+      speciality: this.selectedSpeciality.name,
+      status: "Pendiente",
+      review:
+      {
+        comment:"",
+        done:false
+      }
+    }
+    try{
+      await this.scheduleSrv.generateTurnByDateAndName(detail)
+      this.toasterSvc.success("Turno creado correctamente","Exito");
+    }
+    catch
+    {
+      this.toasterSvc.error("Error al crear el turno","Alerta");      
+    }
+
+    this.medicList=[];
+    this.formattedTurns = []
+    this.selectedTurn = null;
+
+    this.spinner.hide();
+  }
+
+
+  isValidHour(hour: string, day: string): boolean {
+
+    
+    let validTurn = true;
+    this.scheduleSrv.turnList.forEach(turn => {
+      if(turn.doctor == this.selectedMedic.userInfo.mail && turn.date == day && turn.turn == hour)
+        {
+          
+        validTurn = false;
+      }
+    });
+    
+    return validTurn;
+  
   }
 
 }

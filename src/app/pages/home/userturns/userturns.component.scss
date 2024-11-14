@@ -28,3 +28,19 @@
 .card-body {
     padding: 10px;  /* Adjust padding */ 
 }
+
+
+.empty-slot {
+    background-color: #f8d7da; /* Light red background */
+    border: 1px solid #f5c6cb; /* Light red border */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for distinction */
+  }
+  
+  .empty-slot .card-header {
+    background-color: #f5c6cb; /* Lighter red for the header */
+    color: #721c24; /* Darker red text for contrast */
+  }
+  
+  .empty-slot .card-body {
+    color: #721c24; /* Darker red text for the body */
+  }
