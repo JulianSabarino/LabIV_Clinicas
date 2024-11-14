@@ -157,9 +157,4 @@ export class RegisterdoctorComponent implements OnInit{
   resolved(captchaResponse: any) {
     console.log("entro"+captchaResponse);
   }
-
-  CaptchaClick()
-  {
-    console.log("soy interactuable");
-  }
 }

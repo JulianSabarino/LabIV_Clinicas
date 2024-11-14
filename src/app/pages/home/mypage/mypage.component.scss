@@ -1,0 +1,26 @@
+.bkg-img {
+    width: 100%;
+    max-height: 75vh;
+    object-fit: cover;
+    display: block;
+    margin-top: 0;
+}
+
+.overlay {
+    max-width: 30%;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: justify;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1; /* Ensure text is above the image */
+}
+
+.overlay h1
+{
+    text-align: center;  
+}

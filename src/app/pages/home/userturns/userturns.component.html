@@ -1,11 +1,11 @@
 <div class="container">
-    <h1 class="display-5 fw-bold">Sacar Turno</h1>
+    <h1 class="display-5 fw-bold">Sacar Turno (Final)</h1>
 
     <div class="d-flex w-100 justify-content-center">
       <div *ngFor="let especialidad of especialidadesSrv.especialidadesList">
 
         <div class="col">
-          <div class="card shadow-sm">
+          <div class="card shadow-sm selector-card">
             <img class="bd-placeholder-img card-img-top" src="assets/especialidad.jpg" focusable="false" (click)="selectEspecialidad(especialidad)">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center">
@@ -22,8 +22,8 @@
       <div *ngFor="let medic of medicList">
 
         <div class="col">
-          <div class="card shadow-sm">
-            <img class="bd-placeholder-img card-img-top" src="assets/doctor.jpg" focusable="false" >
+          <div class="card shadow-sm selector-card">
+            <img class="bd-placeholder-img card-img-top" src="assets/doctor.jpg" focusable="false" (click)="selectDoctor(medic)">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center">
                 <small class="text-body-secondary">{{medic.userInfo.surename}} {{medic.userInfo.name}}</small>
@@ -35,4 +35,32 @@
       </div>
     </div>
 
+    <hr class="my-4">
+
   </div>
+
+
+
+  <div class="container" *ngIf="selectedMedic">
+    <div class="row row-cols-4 row-cols-md-5 mb-3 g-3">
+      <div class="col" *ngFor="let turn of formattedTurns">
+        <div class="card h-100 rounded-3 shadow-sm">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal text-center"><b>{{ turn.date }}</b></h4>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>
+                <h5 class="my-0"><b>Dia: </b>{{ turn.day }}</h5>
+              </li>
+              <li>
+                <h5 class="my-0"><b>Hora: </b>{{ turn.turn }}</h5>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  

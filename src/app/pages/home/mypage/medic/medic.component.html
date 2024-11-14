@@ -1,5 +1,25 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-loader" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
 
+<div class="container" style="margin-top: 1vh;">
+  <div class="d-flex full-height align-items-center"> <!-- Flexbox container for horizontal layout -->
+    <!-- Image Section -->
+    <img src="assets/doctor.jpg" class="card-img-top" alt="Doctor" style="width: 120px; height: 120px; object-fit: cover;">
+
+    <!-- Text Section -->
+    <div class="ms-3"> <!-- ms-3 adds left margin to separate text from image -->
+      <div>
+        <i class="bi bi-person"></i><b> {{authService.userProfile?.mail}}</b>
+      </div>
+      <div><b>Nombre: </b>{{authService.userProfile?.name}} {{authService.userProfile?.surename}}</div>
+      <div><b>Edad: </b>{{authService.userProfile?.age}}</div>
+      <div><b>DNI: </b>{{authService.userProfile?.dni}}</div>
+    </div>
+  </div>
+  
+  <hr class="my-4">
+</div>
+
+
 <div class="container">
   <h1 class="display-5 fw-bold">Elegir turnos de Trabajo</h1>
 

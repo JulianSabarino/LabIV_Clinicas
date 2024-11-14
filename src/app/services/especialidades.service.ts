@@ -31,6 +31,7 @@ export class EspecialidadesService {
   
   async getLoggedEspecialidadesList(user:any)
   {
+    this.loggedEspecialities = [];
     let path = `medicInfo/${user.mail}`;
   
     let docSnapshot = await getDoc(doc(getFirestore(),path));
