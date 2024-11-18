@@ -80,32 +80,49 @@ export class UserturnsComponent implements OnInit{
     
     // Generate a date range from today to one week ahead
     let dateRange = [];
-    for (let i = 1; i < 7; i++) {
+    for (let i = 1; i < 15; i++) {
       let futureDate = new Date(today);
       futureDate.setDate(today.getDate() + i);
       dateRange.push(futureDate);
     }
 
+    
     // Loop through each day of the input turns and map them to dates
-
+    
     this.formattedTurns = [];
-
+    console.log(this.selectedEspecialidad?.turns)
+    
     this.selectedEspecialidad?.turns.forEach(turn => {
       const dayIndex = daysOfWeek.indexOf(turn.day);
       if (dayIndex !== -1) {
-        // Find the corresponding date for the given day
-        const dateForDay = dateRange.find(date => date.getDay() === dayIndex);
-        if (dateForDay) {
-          // Format the date as MM/DD
-          const formattedDate = `${dateForDay.getDate()}/${dateForDay.getMonth() + 1}/${dateForDay.getFullYear()}`;
-          this.formattedTurns.push({
-            day: turn.day,
-            date: formattedDate,
-            turn: turn.turn
+          // Find all matching dates in the 15-day range that correspond to the correct weekday
+          const matchingDates = dateRange.filter(date => date.getDay() === dayIndex);
+          
+          matchingDates.forEach(dateForDay => {
+              // Format the date as DD/MM/YYYY
+              const formattedDate = `${dateForDay.getDate()}/${dateForDay.getMonth() + 1}/${dateForDay.getFullYear()}`;
+              
+              // Check if the turn is valid for this specific date
+              if(this.isValidHour(turn.turn, formattedDate)) {
+                  this.formattedTurns.push({
+                      day: turn.day,
+                      date: formattedDate,
+                      turn: turn.turn
+                  });
+              }
           });
-        }
       }
-    });
+  });
+
+  this.formattedTurns.sort((a, b) => {
+    // Ensure that the date strings are in MM/DD/YYYY format before creating Date objects
+    const dateA = new Date(`${a.date.split('/')[1]}/${a.date.split('/')[0]}/${a.date.split('/')[2]}`); // MM/DD/YYYY
+    const dateB = new Date(`${b.date.split('/')[1]}/${b.date.split('/')[0]}/${b.date.split('/')[2]}`); // MM/DD/YYYY
+
+    // Type assertion: Ensuring dateA and dateB are Date objects
+    return +dateA - +dateB;  // Using `+` to explicitly convert Date objects to timestamps (milliseconds)
+});
+
   }
 
 

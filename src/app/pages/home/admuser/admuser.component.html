@@ -3,7 +3,7 @@
 <div class="d-flex w-100 align-items-center justify-content-center" style="margin-top: 3vh;">
     <div class="d-flex align-items-center justify-content-center" style="border: 1px solid #333; border-radius: 10px; min-width: 70%;">
 
-    <table class="table table-striped" style="max-width: 95%;">
+    <table class="table table-striped" style="width: 95%;">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -39,81 +39,12 @@
           </tr>
         </tbody>
       </table>
-
     </div>
-
 </div>
 
-<div class="container align-items-center full-height"> 
-
-<div class="row row-cols-1 row-cols-md-3 mb-3">
-
-    <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="card-header py-3">
-                <h4 class="my-0 fw-normal text-center">Listado de Usuarios</h4>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li *ngFor="let user of authService.userList" (click)="selectUser(user)">
-                        <h6 class="my-0">{{user.userInfo | userinfo}}</h6>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    
-    <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="card-header py-3">
-                <h4 class="my-0 fw-normal text-center">Detalles</h4>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled mt-3 mb-4" *ngIf="selectedUser">
-                    <li>
-                        <div class="form-check form-switch">
-                            <input [checked]="selectedUser.userInfo.admin" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
-                            <label class="form-check-label" for="flexSwitchCheckDefault"><h6 class="my-0">Administrador</h6></label>
-                          </div>
-                    </li>
-                    <li>
-                        <h6 class="my-0">Edad: {{selectedUser.userInfo.age | age}}</h6>
-                    </li>
-                    <li>
-                        <h6 class="my-0">DNI: {{selectedUser.userInfo.dni}}</h6>
-                    </li>
-
-                    <li *ngIf="selectedUser.userInfo.medic">
-                        <h6 class="my-0">Especialidades:</h6>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li style="background-color: #f8f9fa;" *ngFor="let especialidad of selectedUser.userInfo.info">{{especialidad}}</li>
-                        </ul>
-                    </li>
-
-                    <li *ngIf="selectedUser.userInfo.medic">
-                        <div class="form-check form-switch">
-                            <input [checked]="selectedUser.active" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault"><h6 class="my-0">Habilitar Cuenta</h6></label>
-                          </div>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="card-header py-3">
-                <h4 class="my-0 fw-normal text-center">Registrar un Administrador</h4>
-            </div>
-            <div class="card-body">
-               <app-adminregister></app-adminregister>
-            </div>
-        </div>
-    </div>
-
-
+<div class="d-flex align-items-center justify-content-center" style="width: 100%; padding-top: 10px;">
+    <div class="d-flex  justify-content-end" style="min-width: 70%;">
+        <button class="btn btn-primary btn-lg" type="button" style="width: 30% ;margin-right: 1vh;" (click)="createAdmin()">Crear nuevo Administrador</button>
+    <button class="btn btn-primary btn-lg" type="button" style="width: 30%;" (click)="exportCSV()">Exportar como CSV</button>
 </div>
-
-</div>
+  </div>

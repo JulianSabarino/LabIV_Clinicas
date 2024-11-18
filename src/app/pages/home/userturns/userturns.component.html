@@ -48,21 +48,8 @@
       <div class="col" *ngFor="let turn of formattedTurns">
         <ng-container *ngIf="isValidHour(turn.turn, turn.date) ; else emptySlot">
 
-        <div class="card h-100 rounded-3 shadow-sm" (click)="selectTurn(turn)">
-          <div class="card-header py-3">
-            <h4 class="my-0 fw-normal text-center"><b>{{ turn.date }}</b></h4>
-          </div>
-          <div class="card-body">
-            <ul class="list-unstyled mt-3 mb-4">
-              <li>
-                <h5 class="my-0"><b>Dia: </b>{{ turn.day }}</h5>
-              </li>
-              <li>
-                <h5 class="my-0"><b>Hora: </b>{{ turn.turn }}</h5>
-              </li>
-            </ul>
-          </div>
-        </div>
+          <button class="btn btn-primary btn-lg" type="button" (click)="selectTurn(turn)">{{ turn.date }} - {{ turn.turn }}</button>
+
 
       </ng-container>
 
@@ -81,6 +68,25 @@
               </li>
               <li>
                 <h5 class="my-0"><b>Estado: </b>Ocupado</h5>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </ng-template>
+
+      <ng-template  #fullslot>
+        <div class="card h-100 rounded-3 shadow-sm" (click)="selectTurn(turn)">
+          <div class="card-header py-3">
+            <h4 class="my-0 fw-normal text-center"><b>{{ turn.date }}</b></h4>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>
+                <h5 class="my-0"><b>Dia: </b>{{ turn.day }}</h5>
+              </li>
+              <li>
+                <h5 class="my-0"><b>Hora: </b>{{ turn.turn }}</h5>
               </li>
             </ul>
           </div>
