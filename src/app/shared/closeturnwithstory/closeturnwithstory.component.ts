@@ -1,61 +1,77 @@
-import { Component, inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UtilsService } from '../../services/utils.service';
 import { AuthService } from '../../services/auth.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { TurnDetailed } from '../../models/user/turn.model';
+import { ScheduleService } from '../../services/schedule.service';
 
 @Component({
   selector: 'app-closeturnwithstory',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,NgxSpinnerModule],
+  imports: [CommonModule,ReactiveFormsModule,NgxSpinnerModule,FormsModule],
   templateUrl: './closeturnwithstory.component.html',
   styleUrl: './closeturnwithstory.component.scss'
 })
 export class CloseturnwithstoryComponent {
 
   utilsService = inject(UtilsService);
-  authService = inject(AuthService);
+  scheduleSvc = inject(ScheduleService);
   spinner = inject(NgxSpinnerService);
 
-  constructor(private dialogRef: MatDialogRef<CloseturnwithstoryComponent>) {}
+  turn?: TurnDetailed
+  commentary: string = "";
+  keyOne: string = "";
+  valueOne: string = "";
+  keyTwo: string = "";
+  valueTwo: string = "";
+
+  constructor(private dialogRef: MatDialogRef<CloseturnwithstoryComponent> , @Inject(MAT_DIALOG_DATA) public data: { turn: TurnDetailed})
+  {
+    this.turn = data.turn;
+  }
 
   form = new FormGroup({
-    mail: new FormControl('',[Validators.required,Validators.email]),
-    name: new FormControl('',[Validators.required]),
-    surname: new FormControl('',[Validators.required]),
-    document: new FormControl('',[Validators.required]),
-    age: new FormControl(''),
-    password: new FormControl('',[Validators.required]),
+    hight: new FormControl('',[Validators.required,Validators.min(24)]),
+    weight: new FormControl('',[Validators.required,Validators.min(0.2)]),
+    temperature: new FormControl('',[Validators.required,Validators.min(27),Validators.max(57)]),
+    pressure: new FormControl('',[Validators.required])
   })
 
-  async register()
+  async chargeClinicHistory()
   {
     this.spinner.show();
+
+    let other: Record<string, string> = {};
+
+    if(this.commentary != "")
+      other['commentary'] = this.commentary
+    if(this.keyOne != "" && this.valueOne != "")
+      other[this.keyOne] = this.valueOne
+    if(this.keyTwo != "" && this.valueTwo != "")
+      other[this.keyTwo] = this.valueTwo
+
     if(this.form.valid)
     {
 
-      let user: any = 
+      let history: any = 
       {
-        mail:this.form.value.mail as string,
-        name: this.form.value.name as string,
-        surename: this.form.value.surname as string,
-        age: this.form.value.age as string,
-        dni: this.form.value.document as string,
-        admin: false,
-        info: [],
-        image:["",""]
+        done: true,
+        hight:this.form.value.hight,
+        weight: this.form.value.weight ,
+        temperature: this.form.value.temperature ,
+        pressure: this.form.value.pressure ,
+        other: other
       }
-
       try
       {
-        await this.authService.createNewAdmin(user,this.form.value.password as string);
-        this.utilsService.goto("home/mainh");
+        this.scheduleSvc.historyTurn(this.turn,history)
       }
       catch
       {
-        console.log("Error al crear usuario")
+        console.log("error");
       }
 
     }
@@ -78,4 +94,5 @@ export class CloseturnwithstoryComponent {
     this.dialogRef.close();  // Return the cancellation comment
   }
 
+  
 }

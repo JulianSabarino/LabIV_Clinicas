@@ -51,7 +51,7 @@ async generateTurnByDateAndName(detail:TurnDetailed)
     patient: detail.patient,
     speciality: detail.speciality,
     status: detail.status,
-    review: detail.review
+    comment: detail.comment
     })
 }
 
@@ -70,10 +70,32 @@ async getTurns()
     turn:doc.data()['turn'],
     doctor:doc.data()['doctor'],
     status:doc.data()['status'],
-    review:doc.data()['review']
+    comment:doc.data()['comment'],
+    history:doc.data()['history'],
   })  
-);
-  
+);  
+}
+async advanceTurn(turn: any, comment: string, status : string)
+{
+  let date = this.formatDateToString(turn.date);
+  //console.log(date);
+  let path = `turns/${date}_${turn.turn}_${turn.doctor}`;
+  await updateDoc(doc(getFirestore(),path),
+  {
+    status: status,
+    comment: comment
+  })
+}
+async historyTurn(turn: any, history: any)
+{
+  let date = this.formatDateToString(turn.date);
+  //console.log(date);
+  let path = `turns/${date}_${turn.turn}_${turn.doctor}`;
+  await updateDoc(doc(getFirestore(),path),
+  {
+    status: "Finalizado",
+    history:history
+  })
 }
 
 async cancelTurn(turn: any, review: string)

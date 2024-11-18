@@ -66,7 +66,8 @@ export class MyturnsComponent implements OnInit{
       console.log('The dialog was closed');
       if (result !== undefined) {
         this.cancelComentary  = result;
-        await this.scheduleSvc.cancelTurn(turn,this.cancelComentary);
+        //await this.scheduleSvc.cancelTurn(turn,this.cancelComentary);
+        await this.scheduleSvc.advanceTurn(turn,this.cancelComentary,"Cancelado")
         console.log(this.cancelComentary);
       }
     });
@@ -74,23 +75,11 @@ export class MyturnsComponent implements OnInit{
 
   async motiveTurn(turn: any)
   {
-    let comment = "";
-    if(turn.status =='Cancelado')
-      {
-      comment = turn.review.comment;
-    }
-    else
-    {
-      comment = turn.review.mcomment;
-    } 
-
-    console.log(comment);
-
     const dialogRef = this.dialog.open(MotiveturnComponent, {
       backdropClass: 'no-backdrop',  // This will make the backdrop invisible
       panelClass: 'centered-dialog', // Apply custom class for centering
       hasBackdrop: false,  // Option
-      data: { status: turn.status, comment:comment}
+      data: { status: turn.status, comment:turn.comment}
     });
     console.log(dialogRef);
 
@@ -109,7 +98,8 @@ export class MyturnsComponent implements OnInit{
       if (result !== undefined) {
         let reviewComment  = result;
         console.log(turn);
-        await this.scheduleSvc.reviewTurn(turn,reviewComment);
+        //await this.scheduleSvc.reviewTurn(turn,reviewComment);
+        await this.scheduleSvc.advanceTurn(turn,reviewComment,"Finalizado");
         console.log(reviewComment);
       }
     });

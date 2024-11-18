@@ -54,7 +54,7 @@
                             <button class="btn btn-primary btn-lg btn-acceptreject" type="button" *ngIf="turn.status == 'Pendiente'" (click)="declineTurn(turn)">Rechazar</button>     
                             <button class="btn btn-primary btn-lg btn-acceptreject" type="button" *ngIf="turn.status == 'Pendiente'" (click)="acceptTurn(turn)">Aceptar</button>
                         </div>
-                        <button class="btn btn-primary btn-lg btn-acceptreject w-100" type="button" *ngIf="turn.status == 'Aceptado'" (click)="endTurn(turn)">Cerrar Turno</button>
+                        <button class="btn btn-primary btn-lg btn-acceptreject w-100" type="button" *ngIf="turn.status == 'Aceptado'" (click)="historyTurn(turn)">Cerrar Turno</button>
                         <button class="btn btn-primary btn-lg btn-acceptreject w-100" type="button" *ngIf="(turn.status == 'Rechazado'|| turn.status == 'Cancelado' || turn.status == 'Comentado')" (click)="motiveTurn(turn)">Motivo</button>
                     </div>
             </div>

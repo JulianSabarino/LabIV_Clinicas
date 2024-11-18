@@ -10,6 +10,7 @@ import { SpecialityfilterPipe } from '../../../pipes/specialityfilter.pipe';
 import { FormsModule } from '@angular/forms';
 import { MotiveturnComponent } from '../../../shared/motiveturn/motiveturn.component';
 import { CloseturnComponent } from '../../../shared/closeturn/closeturn.component';
+import { CloseturnwithstoryComponent } from '../../../shared/closeturnwithstory/closeturnwithstory.component';
 
 @Component({
   selector: 'app-medicturns',
@@ -64,7 +65,8 @@ export class MedicturnsComponent implements OnInit{
       console.log('The dialog was closed');
       if (result !== undefined) {
         this.cancelComentary  = result;
-        await this.scheduleSvc.declineTurn(turn,this.cancelComentary);
+        //await this.scheduleSvc.declineTurn(turn,this.cancelComentary);
+        await this.scheduleSvc.advanceTurn(turn,this.cancelComentary,"Rechazado");
         console.log(this.cancelComentary);
       }
     });
@@ -72,7 +74,8 @@ export class MedicturnsComponent implements OnInit{
 
   async acceptTurn(turn: any)
   {
-        await this.scheduleSvc.acceptTurn(turn);
+    //await this.scheduleSvc.acceptTurn(turn);
+    await this.scheduleSvc.advanceTurn(turn,"","Aceptado");
   }
   
   async endTurn(turn: any)
@@ -93,28 +96,31 @@ export class MedicturnsComponent implements OnInit{
       }
     });
   }
+  async historyTurn(turn: any)
+  {
+    const dialogRef = this.dialog.open(CloseturnwithstoryComponent, {
+      backdropClass: 'no-backdrop',  // This will make the backdrop invisible
+      panelClass: 'centered-dialog', // Apply custom class for centering
+      hasBackdrop: false,  // Option
+      data: {turn:turn}
+    });
+    console.log(dialogRef);
+
+    dialogRef.afterClosed().subscribe(async result => {
+      console.log('The dialog was closed');
+
+    });
+  }
 
 
 
   async motiveTurn(turn: any)
   {
-    let comment = "";
-    if(turn.status!='Rechazado')
-    {
-      comment = turn.review.comment;
-    }
-    else
-    {
-      comment = turn.review.mcomment;
-    } 
-
-    console.log(comment);
-
     const dialogRef = this.dialog.open(MotiveturnComponent, {
       backdropClass: 'no-backdrop',  // This will make the backdrop invisible
       panelClass: 'centered-dialog', // Apply custom class for centering
       hasBackdrop: false,  // Option
-      data: { status: turn.status, comment:comment}
+      data: { status: turn.status, comment:turn.comment}
     });
     console.log(dialogRef);
 

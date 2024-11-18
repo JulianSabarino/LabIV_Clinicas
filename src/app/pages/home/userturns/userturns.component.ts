@@ -142,10 +142,14 @@ export class UserturnsComponent implements OnInit{
       patient: this.authSrv.userProfile?.mail as string,
       speciality: this.selectedSpeciality.name,
       status: "Pendiente",
-      review:
-      {
-        comment:"",
-        mcomment:""
+      comment: "",
+      history:{
+        done:false,
+        hight: 0,
+        weight:0,
+        temperature:0,
+        pressure:"",
+        other: {}
       }
     }
     try{
