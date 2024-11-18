@@ -1,0 +1,42 @@
+<div class="cancel-turn-container container">
+    <h2>Reseña</h2>
+    <div class="cancel-turn-container">
+      <div class="form-group">
+        <div class="d-flex">
+            <i class="bi bi-chat" style="margin-right: 2px;"></i>
+            <label for="cancelComment">Comentario:</label>
+        </div>
+        <input type="text" id="cancelComment" [(ngModel)]="reviewComment" class="form-control" placeholder="Ingrese el motivo">
+      </div>
+
+      <div class="d-flex" style="margin-bottom: 10px; margin-top: 2px;">
+        <div (click)="giveStars(1)">
+            <i class="bi bi-star" *ngIf="stars<1"></i>
+            <i class="bi bi-star-fill" *ngIf="stars>=1"></i>
+        </div>
+        <div (click)="giveStars(2)">
+            <i class="bi bi-star" *ngIf="stars<2"></i>
+            <i class="bi bi-star-fill" *ngIf="stars>=2"></i>
+        </div>
+        <div (click)="giveStars(3)">
+            <i class="bi bi-star" *ngIf="stars<3"></i>
+            <i class="bi bi-star-fill" *ngIf="stars>=3"></i>
+        </div>
+        <div (click)="giveStars(4)">
+            <i class="bi bi-star" *ngIf="stars<4"></i>
+            <i class="bi bi-star-fill" *ngIf="stars>=4"></i>
+        </div>
+        <div (click)="giveStars(5)">
+            <i class="bi bi-star" *ngIf="stars<5"></i>
+            <i class="bi bi-star-fill" *ngIf="stars>=5"></i>
+        </div>
+
+      </div>
+
+      <div class="button-group">
+        <button class="btn" (click)="noCancelar()">Cancelar</button>
+        <button class="btn" (click)="comment()">Cerrar</button>
+      </div>
+    </div>
+    
+    </div>

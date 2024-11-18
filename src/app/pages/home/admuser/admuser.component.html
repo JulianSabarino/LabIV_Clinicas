@@ -1,5 +1,49 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-loader" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
 
+<div class="d-flex w-100 align-items-center justify-content-center" style="margin-top: 3vh;">
+    <div class="d-flex align-items-center justify-content-center" style="border: 1px solid #333; border-radius: 10px; min-width: 70%;">
+
+    <table class="table table-striped" style="max-width: 95%;">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Edad</th>
+            <th>DNI</th>
+            <th>Es Admin</th>
+            <th>Es Medico</th>
+            <th>Detalles</th>
+            <th>Activo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of authService.userList">
+            <td>{{ user.userInfo.name }}</td>
+            <td>{{ user.userInfo.surename }}</td>
+            <td>{{ user.userInfo.mail }}</td>
+            <td>{{ user.userInfo.age | age}} ({{ user.userInfo.age }})</td>
+            <td>{{ user.userInfo.dni }}</td>
+            <td>{{ user.userInfo.admin ? 'Si' : 'No' }}</td>
+            <td>{{ user.userInfo.medic ? 'Si' : 'No' }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let infoItem of user.userInfo.info">{{ infoItem }}</li>
+              </ul>
+            </td>
+            <td>
+                <div class="form-check form-switch">
+                <input [checked]="user.active" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" (change)="disableAccount(user)" *ngIf="user.userInfo.medic">
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+</div>
+
 <div class="container align-items-center full-height"> 
 
 <div class="row row-cols-1 row-cols-md-3 mb-3">
@@ -48,7 +92,7 @@
 
                     <li *ngIf="selectedUser.userInfo.medic">
                         <div class="form-check form-switch">
-                            <input [checked]="selectedUser.active" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" (change)="disableAccount()">
+                            <input [checked]="selectedUser.active" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
                             <label class="form-check-label" for="flexSwitchCheckDefault"><h6 class="my-0">Habilitar Cuenta</h6></label>
                           </div>
                     </li>

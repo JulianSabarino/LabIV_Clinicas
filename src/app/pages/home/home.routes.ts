@@ -23,6 +23,10 @@ export const routes: Routes = [
         loadComponent: ()=> import('../home/medicturns/medicturns.component').then(m=>m.MedicturnsComponent)
     },
     {
+        path: 'adminturns',
+        loadComponent: ()=> import('../home/adminturns/adminturns.component').then(m=>m.AdminturnsComponent)
+    },
+    {
         path: 'mypage',
         loadChildren: ()=> import('../home/mypage/mypage.routes').then(m=>m.routes)
     }

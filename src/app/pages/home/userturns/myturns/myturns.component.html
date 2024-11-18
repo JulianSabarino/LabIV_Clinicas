@@ -52,7 +52,8 @@
                     </ul>
                     <ul class="list-unstyled mt-3 mb-4">
                         <button class="w-100 btn btn-primary btn-lg" type="button" *ngIf="(turn.status == 'Pendiente' || turn.status == 'Aceptado')" (click)="cancelTurn(turn)">Cancelar</button>
-                        <button class="w-100 btn btn-primary btn-lg" type="button" *ngIf="(turn.status == 'Rechazado'|| turn.status == 'Cancelado')" (click)="motiveTurn(turn)">Motivo</button>
+                        <button class="w-100 btn btn-primary btn-lg" type="button" *ngIf="(turn.status == 'Rechazado'|| turn.status == 'Cancelado' || turn.status == 'Comentado')" (click)="motiveTurn(turn)">Motivo</button>
+                        <button class="w-100 btn btn-primary btn-lg" type="button" *ngIf="(turn.status == 'Finalizado')" (click)="reviewTurn(turn)">Dejar Reseña</button>
                     </ul>
                 </div>
             </div>

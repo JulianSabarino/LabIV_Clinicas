@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { CancelturnComponent } from '../../../../shared/cancelturn/cancelturn.component';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MotiveturnComponent } from '../../../../shared/motiveturn/motiveturn.component';
+import { ReviewturnComponent } from '../../../../shared/reviewturn/reviewturn.component';
 
 
 
@@ -38,7 +39,7 @@ export class MyturnsComponent implements OnInit{
 
     this.spinner.show();
 
-    this.scheduleSvc.getTurns();
+   this.scheduleSvc.getTurns();
 
     this.scheduleSvc.turnList.forEach(turn => {
       if(turn.patient == this.authSvc.userProfile?.mail)
@@ -74,7 +75,7 @@ export class MyturnsComponent implements OnInit{
   async motiveTurn(turn: any)
   {
     let comment = "";
-    if(turn.status=='Cancelado')
+    if(turn.status =='Cancelado')
       {
       comment = turn.review.comment;
     }
@@ -92,6 +93,26 @@ export class MyturnsComponent implements OnInit{
       data: { status: turn.status, comment:comment}
     });
     console.log(dialogRef);
+
+  }
+  async reviewTurn(turn: any)
+  {
+    const dialogRef = this.dialog.open(ReviewturnComponent, {
+      backdropClass: 'no-backdrop',  // This will make the backdrop invisible
+      panelClass: 'centered-dialog', // Apply custom class for centering
+      hasBackdrop: false,  // Option
+    });
+    //console.log(dialogRef);
+
+    dialogRef.afterClosed().subscribe(async result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        let reviewComment  = result;
+        console.log(turn);
+        await this.scheduleSvc.reviewTurn(turn,reviewComment);
+        console.log(reviewComment);
+      }
+    });
 
   }
 

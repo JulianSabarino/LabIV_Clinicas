@@ -116,6 +116,36 @@ async acceptTurn(turn: any)
     status: "Aceptado",
   })
 }
+async closeTurn(turn: any, review: string)
+{
+  let date = this.formatDateToString(turn.date);
+  //console.log(date);
+  let path = `turns/${date}_${turn.turn}_${turn.doctor}`;
+  await updateDoc(doc(getFirestore(),path),
+  {
+    status: "Finalizado",
+    review:
+    {
+      comment: "",
+      mcomment:review
+    }
+  })
+}
+async reviewTurn(turn: any, review: string)
+{
+  let date = this.formatDateToString(turn.date);
+  //console.log(date);
+  let path = `turns/${date}_${turn.turn}_${turn.doctor}`;
+  await updateDoc(doc(getFirestore(),path),
+  {
+    status: "Comentado",
+    review:
+    {
+      comment: review,
+      mcomment: turn.review.mcomment
+    }
+  })
+}
 
 formatDateToString(strdate: string): string {
   let cleanedDate = strdate.replace(/\//g, '');

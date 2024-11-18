@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CancelturnComponent } from '../../../shared/cancelturn/cancelturn.component';
 import { ScheduleService } from '../../../services/schedule.service';
 import { AuthService } from '../../../services/auth.service';
@@ -21,7 +21,7 @@ import { CloseturnComponent } from '../../../shared/closeturn/closeturn.componen
   templateUrl: './medicturns.component.html',
   styleUrl: './medicturns.component.scss'
 })
-export class MedicturnsComponent {
+export class MedicturnsComponent implements OnInit{
 
   scheduleSvc = inject(ScheduleService);
   authSvc = inject(AuthService);
@@ -88,7 +88,7 @@ export class MedicturnsComponent {
       console.log('The dialog was closed');
       if (result !== undefined) {
         let closeComment  = result;
-        await this.scheduleSvc. closeTurn(turn,closeComment);
+        await this.scheduleSvc.closeTurn(turn,closeComment);
         console.log(closeComment);
       }
     });
@@ -99,8 +99,8 @@ export class MedicturnsComponent {
   async motiveTurn(turn: any)
   {
     let comment = "";
-    if(turn.status=='Cancelado')
-      {
+    if(turn.status!='Rechazado')
+    {
       comment = turn.review.comment;
     }
     else

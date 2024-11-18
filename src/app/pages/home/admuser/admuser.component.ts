@@ -32,13 +32,16 @@ export class AdmuserComponent implements OnInit{
     console.log(this.selectedUser);
   }
 
-  async disableAccount()
+  async disableAccount(user:any)
   {
-    this.spinner.show();
-    if(this.selectedUser.active) this.selectedUser.active=false;
-    else this.selectedUser.active=true;
+    console.log(user)
 
-    await this.authService.enableAccount(this.selectedUser,this.selectedUser.active);
+    this.spinner.show();
+    if(user.active) user.active=false;
+    else user.active=true;
+
+    await this.authService.enableAccount(user,user.active);
     this.spinner.hide();
+
   }
 }

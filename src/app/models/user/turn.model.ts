@@ -13,6 +13,6 @@ export interface TurnDetailed
     mcomment: string;
   };
   speciality: string;
-  status: "Pendiente" | "Rechazado" | "Aceptado" | "Cancelado" | "Finalizado";
+  status: "Pendiente" | "Rechazado" | "Aceptado" | "Cancelado" | "Finalizado" | "Comentado";
   turn: string;
 }

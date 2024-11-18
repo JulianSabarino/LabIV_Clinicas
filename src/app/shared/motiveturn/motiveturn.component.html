@@ -1,7 +1,7 @@
 <div class="cancel-turn-container container">
     <h2>Turno</h2>
     <div class="cancel-turn-container">
-      <p>El motivo de que su turno fue {{status}}:</p>
+      <p *ngIf="status != 'Comentado'">El motivo de que su turno fue {{status}}:</p>
       <div class="form-group">
         <label for="cancelComment">{{comment}}</label>
       </div>
