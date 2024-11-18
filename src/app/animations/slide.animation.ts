@@ -1,16 +1,20 @@
-import { trigger, group, style, animate, transition, query, animateChild } from '@angular/animations';
+import { trigger, group, style, animate, transition, query, animateChild, stagger } from '@angular/animations';
 
-export const slideInAnimation = trigger('routeAnimations', [
-    trigger('slideAnimation', [
-        // Slide in from the right for "Next"
-        transition(':increment', [
-          style({ transform: 'translateX(100%)' }),
-          animate('500ms ease-in-out', style({ transform: 'translateX(0%)' })),
-        ]),
-        // Slide in from the left for "Previous"
-        transition(':decrement', [
-          style({ transform: 'translateX(-100%)' }),
-          animate('500ms ease-in-out', style({ transform: 'translateX(0%)' })),
-        ]),
+export const slideInAnimation = 
+[
+    trigger('slideInAnimation', [ 
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'translateY(-100px)'}),
+          stagger('1s', [
+            animate('1s', style({ opacity: 1, transform: 'translateY(0)'}))
+          ])
+        ], { optional: true }),
+        query(':leave', [
+          stagger('100ms', [
+            animate('1s', style({ opacity: 0,  "margin-top":"16rem"}))
+          ])
+        ], { optional: true })
       ])
-]);
+    ])
+  ]

@@ -128,7 +128,7 @@ export class UserturnsComponent implements OnInit{
       review:
       {
         comment:"",
-        done:false
+        mcomment:""
       }
     }
     try{

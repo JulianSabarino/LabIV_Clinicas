@@ -1,7 +1,7 @@
 <div class="carousel">
-  <div class="carousel-inner">
+  <div class="carousel-inner" [@slideInAnimation]="slide">
 
-      <div class="carousel-item active" *ngIf="slide==1"  [@slideInAnimation]="movingTowards">
+      <div class="carousel-item active" *ngIf="slide==1" >
         <div class="overlay">
           <h1>Clinica </h1>
           <p class="lead"> Clinica es un centro médico dedicado a brindar atención médica de calidad,
@@ -12,7 +12,7 @@
         <img src="assets/clinicas.jpg" alt="Slide 3">
       </div>
 
-      <div class="carousel-item active" *ngIf="slide==2" [@slideInAnimation]="movingTowards"> 
+      <div class="carousel-item active" *ngIf="slide==2"> 
         <div class="overlay">
           <h1>Turnos on-line</h1>
           <p class="lead"> Inicia sesión en la página y saca turno para las distintas espaecialidades en todos los sanatorios.</p>
@@ -21,7 +21,7 @@
         <img src="assets/clinicas.jpg" alt="Slide 3">
       </div>
 
-      <div class="carousel-item active" *ngIf="slide==3" [@slideInAnimation]="movingTowards">
+      <div class="carousel-item active" *ngIf="slide==3">
         <div class="overlay">
           <h1>Turnos on-line</h1>
           <p class="lead"> Registrate en la página y saca turno para las distintas espaecialidades en todos los sanatorios.</p>

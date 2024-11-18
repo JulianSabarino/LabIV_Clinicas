@@ -3,6 +3,7 @@ import { UtilsService } from '../../services/utils.service';
 import { CommonModule } from '@angular/common';
 import { slideInAnimation } from '../../animations/slide.animation';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -18,7 +19,7 @@ export class HomeComponent {
   router = inject(UtilsService);
 
   slide: number = 1;
-  movingTowards = "";
+  movingTowards = ":increment";
 
 
   next()

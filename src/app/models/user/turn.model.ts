@@ -10,9 +10,9 @@ export interface TurnDetailed
   patient: string;
   review:{
     comment: string;
-    done: boolean;
+    mcomment: string;
   };
   speciality: string;
-  status: "Pendiente" | "Aceptado" | "Cancelado" | "Finalizado";
+  status: "Pendiente" | "Rechazado" | "Aceptado" | "Cancelado" | "Finalizado";
   turn: string;
 }

@@ -24,12 +24,12 @@ export const appConfig: ApplicationConfig = {
     provideToastr({timeOut:4000,preventDuplicates:true}),
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp({
-      projectId: "clinicasabarino",
-      appId: "1:1083460240282:web:af27db556825929d2cf023",
-      storageBucket: "clinicasabarino.appspot.com",
       apiKey: "AIzaSyDZX-SjXCrUQIf1LTYyrG3gzBbSI027nkQ",
       authDomain: "clinicasabarino.firebaseapp.com",
-      messagingSenderId: "1083460240282"
+      projectId: "clinicasabarino",
+      storageBucket: "clinicasabarino.firebasestorage.app",
+      messagingSenderId: "1083460240282",
+      appId: "1:1083460240282:web:af27db556825929d2cf023"
     })),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

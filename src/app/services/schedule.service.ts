@@ -17,7 +17,7 @@ export class ScheduleService {
   "13:30"];
 
 
-  turnList: any[] = [];
+  turnList: TurnDetailed[] = [];
 
   constructor() { }
 
@@ -61,6 +61,8 @@ async getTurns()
   
   let data = await getDocs(collection(getFirestore(),path));
 
+//  this.loggedEspecialities = data["specialities"] as Especialidades[]
+
   this.turnList = data.docs.map(doc => ({
     speciality:doc.data()['speciality'],
     patient:doc.data()['patient'],
@@ -74,19 +76,44 @@ async getTurns()
   
 }
 
-async leaveReview(turn: any, review: string)
+async cancelTurn(turn: any, review: string)
 {
   let date = this.formatDateToString(turn.date);
   //console.log(date);
   let path = `turns/${date}_${turn.turn}_${turn.doctor}`;
   await updateDoc(doc(getFirestore(),path),
   {
-    status: "Canceled",
+    status: "Cancelado",
     review:
     {
-      done: true,
-      comment:review
+      comment:review,
+      mcomment:""
     }
+  })
+}
+async declineTurn(turn: any, review: string)
+{
+  let date = this.formatDateToString(turn.date);
+  //console.log(date);
+  let path = `turns/${date}_${turn.turn}_${turn.doctor}`;
+  await updateDoc(doc(getFirestore(),path),
+  {
+    status: "Rechazado",
+    review:
+    {
+      comment: "",
+      mcomment:review
+    }
+  })
+}
+async acceptTurn(turn: any)
+{
+  let date = this.formatDateToString(turn.date);
+  //console.log(date);
+  let path = `turns/${date}_${turn.turn}_${turn.doctor}`;
+  await updateDoc(doc(getFirestore(),path),
+  {
+    status: "Aceptado",
   })
 }
 
