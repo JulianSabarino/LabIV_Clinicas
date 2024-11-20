@@ -5,7 +5,9 @@ import { EspecialidadesService } from '../../../../services/especialidades.servi
 import { ScheduleService } from '../../../../services/schedule.service';
 import { NgxSpinnerComponent, NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { Turn } from '../../../../models/user/turn.model';
+import { Turn, TurnDetailed } from '../../../../models/user/turn.model';
+import { UserturnlistComponent } from '../../../../shared/userturnlist/userturnlist.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-medic',
@@ -22,6 +24,7 @@ export class MedicComponent implements OnInit{
   scheduleService = inject(ScheduleService);
   spinner = inject(NgxSpinnerService);
   toastSvc = inject(ToastrService);
+  dialog = inject(MatDialog);
 
 
   myEspecialidades: any [] = [];
@@ -112,28 +115,22 @@ async saveSpecialities()
   this.spinner.hide();
 }
 
+async openUserTurnList(user: any)
+{
+  let userTurns: TurnDetailed[] = [];
+  this.scheduleService.turnList.forEach(turn => {
+    if(turn.patient==user.userInfo.mail && turn.status != "Rechazado")
+      userTurns.push(turn);
+  });
+
+  const dialogRef = this.dialog.open(UserturnlistComponent, {
+    backdropClass: 'no-backdrop',  // This will make the backdrop invisible
+    panelClass: 'centered-dialog', // Apply custom class for centering
+    hasBackdrop: false,  // Option
+    data: {turns:userTurns}
+  });
+
 }
 
+}
 
-/*
-this.selectedEspecialidad?.turns.forEach(turn => {
-  const dayIndex = daysOfWeek.indexOf(turn.day);
-  if (dayIndex !== -1) {
-      // Find all matching dates in the 15-day range that correspond to the correct weekday
-      const matchingDates = dateRange.filter(date => date.getDay() === dayIndex);
-      
-      matchingDates.forEach(dateForDay => {
-          // Format the date as DD/MM/YYYY
-          const formattedDate = `${dateForDay.getDate()}/${dateForDay.getMonth() + 1}/${dateForDay.getFullYear()}`;
-          
-          // Check if the turn is valid for this specific date
-          if(this.isValidHour(turn.turn, formattedDate)) {
-              this.formattedTurns.push({
-                  day: turn.day,
-                  date: formattedDate,
-                  turn: turn.turn
-              });
-          }
-      });
-  }
-});*/

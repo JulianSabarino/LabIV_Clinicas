@@ -102,7 +102,7 @@
   <div class="row row-cols-1 row-cols-md-3 mb-3" style="justify-content: center;">
 
       <div class="col" *ngFor="let user of myUsers">
-        <img class="rounded-circle border border-dark" src="assets/user.jpg" alt="Generic placeholder image" width="140" height="140">
+        <img class="rounded-circle border border-dark" src="assets/user.jpg" alt="Generic placeholder image" width="140" height="140" (click)="openUserTurnList(user)">
       </div> 
       
 

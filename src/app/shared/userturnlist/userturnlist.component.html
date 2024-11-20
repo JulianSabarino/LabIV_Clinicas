@@ -1,1 +1,32 @@
-<p>userturnlist works!</p>
+
+<div class="container align-items-center full-height" style="padding: 2vh; max-height: 50%; overflow: scroll;">
+    <h3>Filtrar Turno</h3>
+    <input type="search" [(ngModel)]="busqueda" [ngModelOptions]="{standalone: true}">
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3" style="justify-content: center;">
+
+        <table class="table table-striped" style="width: 95%; overflow-y: scroll;">
+            <thead>
+                <tr>
+                    <th>Dia</th>
+                    <th>Turno</th>
+                    <th>Estado</th>
+                    <th>Comentario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let turn of myTurns | statusfilter: busqueda">
+                    <td>{{ turn.date }}</td>
+                    <td>{{ turn.turn }}</td>
+                    <td>{{ turn.status }}</td>
+                    <td>{{ turn.comment }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-primary btn-lg" type="button" (click)="close()" style="width: 95%;">Cerrar</button>
+
+
+
+    </div>
+
+</div>
