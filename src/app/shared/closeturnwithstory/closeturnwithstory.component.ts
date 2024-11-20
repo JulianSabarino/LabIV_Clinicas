@@ -47,11 +47,17 @@ export class CloseturnwithstoryComponent {
     let other: Record<string, string> = {};
 
     if(this.commentary != "")
+    {
       other['commentary'] = this.commentary
-    if(this.keyOne != "" && this.valueOne != "")
-      other[this.keyOne] = this.valueOne
-    if(this.keyTwo != "" && this.valueTwo != "")
-      other[this.keyTwo] = this.valueTwo
+      if(this.keyOne != "" && this.valueOne != "")
+      {
+        other[this.keyOne] = this.valueOne
+        if(this.keyTwo != "" && this.valueTwo != "")
+          other[this.keyTwo] = this.valueTwo
+
+      }
+
+    }
 
     if(this.form.valid)
     {

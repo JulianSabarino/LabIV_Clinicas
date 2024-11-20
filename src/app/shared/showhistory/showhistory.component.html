@@ -1,0 +1,53 @@
+<div class="card mb-4 rounded-3 shadow-sm">
+    <div class="card-header py-3">
+        <h4 class="my-0 fw-normal text-center"><b>{{turn?.date}} - {{turn?.turn}}</b></h4>
+    </div>
+
+    <div class="card-body">
+        <ul class="list-unstyled mt-3 mb-4">
+            <li>
+                <h6 class="my-0">Altura</h6>
+            </li>
+            <li>
+                <h4 class="my-0">{{turn?.history?.hight}} Cm</h4>
+            </li>
+        </ul>
+        <ul class="list-unstyled mt-3 mb-4">
+            <li>
+                <h6 class="my-0">Peso</h6>
+            </li>
+            <li>
+                <h4 class="my-0">{{turn?.history?.weight}} Kg</h4>
+            </li>
+        </ul>
+        <ul class="list-unstyled mt-3 mb-4">
+            <li>
+                <h6 class="my-0">Temperatura</h6>
+            </li>
+            <li>
+                <h4 class="my-0">{{turn?.history?.temperature}} °C</h4>
+            </li>
+        </ul>
+        <ul class="list-unstyled mt-3 mb-4">
+            <li>
+                <h6 class="my-0">Presion</h6>
+            </li>
+            <li>
+                <h4 class="my-0">{{turn?.history?.pressure}}</h4>
+            </li>
+        </ul>
+        <ul class="list-unstyled mt-3 mb-4">
+            <li>
+                <h6 class="my-0">Otros</h6>
+            </li>
+            <li *ngFor="let item of otherList" class="d-flex">
+                <i class="bi bi-play-fill"></i>
+                <h4 class="my-0" *ngIf="item[0] != 'commentary'">{{item[0]}}: </h4>
+                <h4 class="my-0">{{item[1]}}</h4>
+            </li>
+        </ul>
+
+        <button class="w-100 btn btn-primary btn-lg" type="button" (click)="close()">Cerrar</button>
+    </div>
+
+</div>

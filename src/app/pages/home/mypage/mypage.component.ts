@@ -1,17 +1,26 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { ScheduleService } from '../../../services/schedule.service';
+import { TurnDetailed } from '../../../models/user/turn.model';
+import { CommonModule } from '@angular/common';
+import { ShowhistoryComponent } from '../../../shared/showhistory/showhistory.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-mypage',
   standalone: true,
-  imports: [NgxSpinnerModule],
+  imports: [NgxSpinnerModule,CommonModule],
   templateUrl: './mypage.component.html',
   styleUrl: './mypage.component.scss'
 })
 export class MypageComponent implements OnInit{
   authService = inject(AuthService);
+  scheduleSvc = inject(ScheduleService);
   spinner = inject(NgxSpinnerService);
+  dialog = inject(MatDialog);
+
+  myTurnsList: TurnDetailed[] = [];
 
   frase: number = 0;
   frasesList: any[] = [
@@ -39,14 +48,37 @@ export class MypageComponent implements OnInit{
 
 
 
-  ngOnInit(): void {
+ async ngOnInit() {
+    this.spinner.show()
     this.frase = this.generarFrase();
+    await this.scheduleSvc.getTurns();
+
+      this.scheduleSvc.turnList.forEach(turn => {
+      if(turn.patient == this.authService.userProfile?.mail)
+      {
+        console.log(turn)
+        this.myTurnsList.push(turn);
+      }
+    });
+    this.spinner.hide();
   }
 
 
   generarFrase() {
     // Genera un número aleatorio entre 1 y 5
     return Math.floor(Math.random() * 5);
+  }
+
+  showHistory(turn: TurnDetailed)
+  {
+    console.log(turn);
+    const dialogRef = this.dialog.open(ShowhistoryComponent, {
+      backdropClass: 'no-backdrop',  // This will make the backdrop invisible
+      panelClass: 'centered-dialog', // Apply custom class for centering
+      hasBackdrop: false,  // Option
+      data: {turn:turn}
+    });
+    //console.log(dialogRef);
   }
   
 }

@@ -25,6 +25,7 @@ export class MedicComponent implements OnInit{
 
 
   myEspecialidades: any [] = [];
+  myUsers: any[] = []
   selectedEspecialidad: any;
 
   async ngOnInit() {
@@ -36,6 +37,17 @@ export class MedicComponent implements OnInit{
     await this.especialitiesService.getLoggedEspecialidadesList(this.authService.userProfile);
     //console.log(this.authService.userProfile);
     console.log(this.especialitiesService.loggedEspecialities);
+
+    console.log(this.authService.userList);
+
+    this.authService.userList.forEach(user => {
+
+      let matchUser = this.scheduleService.turnList.filter(turn => turn.patient === user.userInfo.mail)
+
+      if(matchUser.length > 0)
+        this.myUsers.push(user);
+      
+    });
     
     this.spinner.hide();
   }
@@ -101,3 +113,27 @@ async saveSpecialities()
 }
 
 }
+
+
+/*
+this.selectedEspecialidad?.turns.forEach(turn => {
+  const dayIndex = daysOfWeek.indexOf(turn.day);
+  if (dayIndex !== -1) {
+      // Find all matching dates in the 15-day range that correspond to the correct weekday
+      const matchingDates = dateRange.filter(date => date.getDay() === dayIndex);
+      
+      matchingDates.forEach(dateForDay => {
+          // Format the date as DD/MM/YYYY
+          const formattedDate = `${dateForDay.getDate()}/${dateForDay.getMonth() + 1}/${dateForDay.getFullYear()}`;
+          
+          // Check if the turn is valid for this specific date
+          if(this.isValidHour(turn.turn, formattedDate)) {
+              this.formattedTurns.push({
+                  day: turn.day,
+                  date: formattedDate,
+                  turn: turn.turn
+              });
+          }
+      });
+  }
+});*/

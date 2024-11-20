@@ -18,6 +18,34 @@
   
   <hr class="my-4">
 
+  <div class="d-flex w-100 align-items-center justify-content-center" style="margin-top: 3vh;">
+    <div class="d-flex align-items-center justify-content-center" style="border: 1px solid #333; border-radius: 10px; min-width: 70%;">
+
+    <table class="table table-striped" style="width: 95%;">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Turno</th>
+            <th>Especialidad</th>
+            <th>Doctor</th>
+            <th>Comentario</th>
+            <th>Historial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let turn of myTurnsList">
+            <td>{{ turn.date }}</td>
+            <td>{{ turn.turn }}</td>
+            <td>{{ turn.speciality }}</td>
+            <td>{{ turn.doctor}}</td>
+            <td><p *ngIf="turn.status=='Finalizado'"> {{turn.comment}} </p></td>
+            <td><button *ngIf="turn.history" class="btn-history" (click)="showHistory(turn)"><i class="bi bi-file-earmark-medical"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+
 </div>
 <div class="full-height">
     <div class="overlay">
