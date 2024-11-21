@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {  NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
+import { rightLeftAnimation } from '../../animations/rightleft.animation';
 
 
 
@@ -12,7 +13,10 @@ import {  NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
   standalone: true,
   imports: [CommonModule,ReactiveFormsModule,NgxSpinnerModule],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss'
+  styleUrl: './auth.component.scss',
+  animations: [
+    rightLeftAnimation
+  ]
 })
 export class AuthComponent {
   authService = inject(AuthService)

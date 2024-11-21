@@ -1,0 +1,54 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-loader" [fullScreen]="true">
+    <p style="color: white"> Cargando... </p>
+</ngx-spinner>
+
+<div class="container align-items-center w-100" style="margin: 1vh; display: flex; flex-direction: column;">
+    <h3>Filtrar Turno</h3>
+    <input type="search" [(ngModel)]="busqueda" >
+  </div>
+
+<div class="container align-items-center full-height">
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3" style="justify-content: center;">
+
+        <div class="col" *ngFor="let user of authSvc.userList| userfilter: busqueda">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3" [appHighlightmedics]="user.userInfo.medic">
+                    <h4 class="my-0 fw-normal text-center">{{user.userInfo.name}} {{user.userInfo.surename}} {{ user.userInfo.medic ? '(Medico)' : '' }}{{ user.userInfo.admin ? '(Admin)' : '' }}</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>
+                            <h6 class="my-0" >Mail</h6>
+                        </li>
+                        <li>
+                            <h4 class="my-0" >{{user.userInfo.mail}}</h4>
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>
+                            <h6 class="my-0" >Edad</h6>
+                        </li>
+                        <li>
+                            <h4 class="my-0" >{{ user.userInfo.age | age}} ({{ user.userInfo.age }})</h4>
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>
+                            <h6 class="my-0" >DNI</h6>
+                        </li>
+                        <li>
+                            <h4 class="my-0" >{{user.userInfo.dni}}</h4>
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <button class="w-100 btn btn-primary btn-lg" type="button" (click)="printTurns(user)">Imprimir Turnos</button>
+                    </ul>
+                </div>
+            </div>
+        </div> 
+        
+
+    </div>
+
+</div>

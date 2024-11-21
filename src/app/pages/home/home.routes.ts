@@ -8,7 +8,7 @@ export const routes: Routes = [
     },
     {
         path: 'admuser',
-        loadComponent: ()=> import('../home/admuser/admuser.component').then(m=>m.AdmuserComponent)
+        loadChildren: ()=> import('../home/admuser/admusers.routes').then(m=>m.routes)
     },
     {
         path: 'mainh',
