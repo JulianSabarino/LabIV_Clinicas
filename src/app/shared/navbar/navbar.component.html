@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" *ngIf="authService.loggedUser">
+<nav class="navbar navbar-expand-lg" *ngIf="authService.loggedUser">
   <a class="navbar-brand" style="margin-left: 1vh;">Clinica</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,30 +6,35 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="justify-content: space-between;">
     <div class="navbar-nav">
-      <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin"
-        (click)="router.goto('home/admuser')">Administración de Usuarios</button>
-      <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin"
-        (click)="router.goto('home/admuser/usercard')">Cartas Usuarios</button>
      
+        <!-- Usuarios-->
+        <button class="nav-item nav-link" *ngIf="!(authService.userProfile?.medic)"
+        (click)="router.goto('home/mypage')">Mi pagina</button>
         
-        <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
-        (click)="router.goto('home/userturns')">Sacar Turno(Usuarios)</button>
+        <button class="nav-item nav-link" *ngIf="!(authService.userProfile?.medic || authService.userProfile?.admin)"
+        (click)="router.goto('home/userturns')">Sacar Turno</button>
         
-        <button class="nav-item nav-link" *ngIf="!authService.userProfile?.medic"
-        (click)="router.goto('home/userturns/myturns')">Mis Turno(Usuarios)</button>
-        
-        <button class="nav-item nav-link"
-        (click)="router.goto('home/mypage')">Mi pagina (Usuarios)</button>
-        
+        <button class="nav-item nav-link" *ngIf="!(authService.userProfile?.medic || authService.userProfile?.admin)"
+        (click)="router.goto('home/userturns/myturns')">Mis Turno</button>
+
+        <!--Medicos-->
+        <button class="nav-item nav-link" *ngIf="authService.userProfile?.medic"
+        (click)="router.goto('home/medicturns')">Mis Turnos</button>
         
         <button class="nav-item nav-link" *ngIf="authService.userProfile?.medic"
-        (click)="router.goto('home/medicturns')">Mis Turnos(Medicos)</button>
-        
-        <button class="nav-item nav-link"
-        (click)="router.goto('home/mypage/medic')">Mi pagina (Medicos)</button>
+        (click)="router.goto('home/mypage/medic')">Mi pagina</button>
+
+
+        <!--Administradores: Falta sacar turnos de administradores-->
+        <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin"
+        (click)="router.goto('home/admuser')">Administración de Usuarios</button>
 
         <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin"
-        (click)="router.goto('home/adminturns')">Turnos(Administración)</button>
+        (click)="router.goto('home/admuser/usercard')">Cartas Usuarios</button>
+        
+        <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin"
+        (click)="router.goto('home/adminturns')">Todos los Turnos</button>
+
         
     </div>
     <div class="navbar-nav">

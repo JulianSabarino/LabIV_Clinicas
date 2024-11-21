@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { doc, getFirestore, setDoc, getDoc, collection, getDocs,updateDoc } from '@angular/fire/firestore';
 import { TurnDetailed } from '../models/user/turn.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,9 @@ export class ScheduleService {
   satTurns: string[] =
   ["08:00","08:30","09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00",
   "13:30"];
+
+  private _turnList = new BehaviorSubject<TurnDetailed[]>([]); //Use BehaviorSubject
+  turnList$: Observable<any[]> = this._turnList.asObservable(); //Expose as observable
 
 
   turnList: TurnDetailed[] = [];
@@ -73,7 +77,13 @@ async getTurns()
     comment:doc.data()['comment'],
     history:doc.data()['history'],
   })  
-);  
+);
+
+console.log(this.turnList);
+
+this._turnList.next(this.turnList);
+console.log(this._turnList);
+
 }
 async advanceTurn(turn: any, comment: string, status : string)
 {

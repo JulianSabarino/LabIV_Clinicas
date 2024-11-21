@@ -10,6 +10,7 @@ import { CancelturnComponent } from '../../../../shared/cancelturn/cancelturn.co
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MotiveturnComponent } from '../../../../shared/motiveturn/motiveturn.component';
 import { ReviewturnComponent } from '../../../../shared/reviewturn/reviewturn.component';
+import { from, Observable, Subscription } from 'rxjs';
 
 
 
@@ -35,22 +36,24 @@ export class MyturnsComponent implements OnInit{
   myTurnsList: any[] = []
   cancelComentary: string = "";
 
+  private turnListSubscription: Subscription | undefined;  // Add subscription property
+
+
   async ngOnInit() {
-
     this.spinner.show();
-
-   this.scheduleSvc.getTurns();
-
-    this.scheduleSvc.turnList.forEach(turn => {
-      if(turn.patient == this.authSvc.userProfile?.mail)
-      {
-        console.log(turn)
-        this.myTurnsList.push(turn);
-      }
-    });
-
+    this.loadTurns();
+    await this.scheduleSvc.getTurns();
+    console.log(this.turnListSubscription)
     this.spinner.hide();
 
+  }
+
+  async loadTurns()
+  {
+    this.turnListSubscription = this.scheduleSvc.turnList$.subscribe(turns => {
+      this.myTurnsList = turns.filter(turn => turn.patient === this.authSvc.userProfile?.mail);
+      console.log("estoy observado" + this.myTurnsList);
+    });
   }
 
   async cancelTurn(turn: any)
@@ -68,7 +71,8 @@ export class MyturnsComponent implements OnInit{
         this.cancelComentary  = result;
         //await this.scheduleSvc.cancelTurn(turn,this.cancelComentary);
         await this.scheduleSvc.advanceTurn(turn,this.cancelComentary,"Cancelado")
-        console.log(this.cancelComentary);
+        this.toastSvc.success("Turno cancelado con exito","Cancelación de Turno");
+        await this.loadTurns();
       }
     });
   }

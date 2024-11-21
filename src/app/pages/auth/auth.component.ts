@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { UtilsService } from '../../services/utils.service';
 import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,7 +18,7 @@ import { rightLeftAnimation } from '../../animations/rightleft.animation';
     rightLeftAnimation
   ]
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit{
   authService = inject(AuthService)
   utilSvc = inject(UtilsService)
   
@@ -30,6 +30,12 @@ export class AuthComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(5)]),
   })
+
+ async ngOnInit() {
+    this.spinner.show()
+    await this.authService.getUserList();
+    this.spinner.hide();
+  }
 
   async submit() {
     this.spinner.show();

@@ -18,12 +18,33 @@
 
 .container
 {
-    max-width: 30%;
+    width: 20%;
     padding: 15px;
     margin: auto;
     margin-top: 10%;
     border-radius: 15px;
     //border: 1px solid #ddd;
-    background-color: #f8f9fa;
+    background-color: lightblue;
 
 }
+
+
+ .full-screen{
+    top: 0;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('/assets/mosaic.jpg');
+    opacity: 0.2;
+    background-repeat: repeat; /* Repeats the image to create the mosaic effect */
+    background-size: auto; /* Keeps the image size as it is */
+    background-position: top left; /* Ensures it starts at the top-left corner */
+    z-index: -1;
+  }
+  
+
+  .form-floating
+  {
+    margin-top: 0.5vh;
+  }

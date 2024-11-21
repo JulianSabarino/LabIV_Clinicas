@@ -1,6 +1,6 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-loader" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
 
-<div class="container">
+<div class="container" style="margin-top: 5vh;">
     <h1 class="display-5 fw-bold">Sacar Turno</h1>
 
     <div class="d-flex w-100 justify-content-center">
@@ -43,7 +43,7 @@
 
 
 
-  <div class="container" *ngIf="selectedMedic" >
+  <div class="container" *ngIf="selectedMedic" style="max-height: 30vh; overflow: scroll;">
     <div class="row row-cols-4 row-cols-md-5 mb-3 g-3">
       <div class="col" *ngFor="let turn of formattedTurns">
         <ng-container *ngIf="isValidHour(turn.turn, turn.date) ; else emptySlot">
@@ -98,7 +98,7 @@
   </div>
 
 
-  <div class="container" style="margin-top: 1vh;" *ngIf="selectedMedic && selectedSpeciality && selectedTurn">
+  <div class="container" style="margin-top: 1vh; background-color: white;" *ngIf="selectedMedic && selectedSpeciality && selectedTurn">
     <hr class="my-4">
     <div class="d-flex full-height align-items-center"> <!-- Flexbox container for horizontal layout -->
       <!-- Image Section -->
@@ -120,4 +120,4 @@
   
   </div>
 
-  
+  <app-backgroundimage></app-backgroundimage>

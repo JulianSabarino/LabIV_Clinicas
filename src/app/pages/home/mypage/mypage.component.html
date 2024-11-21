@@ -1,7 +1,7 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-loader" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
 
 <div class="container" style="margin-top: 1vh;">
-  <div class="d-flex full-height align-items-center"> <!-- Flexbox container for horizontal layout -->
+  <div class="d-flex full-height align-items-center" style="background-color: white; padding: 2vh; border-radius: 1vh; border: 1px solid lightblue;"> <!-- Flexbox container for horizontal layout -->
     <!-- Image Section -->
     <img src="assets/user.jpg" class="card-img-top" alt="User" style="width: 120px; height: 120px; object-fit: cover;">
 
@@ -18,8 +18,8 @@
   
   <hr class="my-4">
 
-  <div class="d-flex w-100 align-items-center justify-content-center" style="margin-top: 3vh;">
-    <div class="d-flex align-items-center justify-content-center" style="border: 1px solid #333; border-radius: 10px; min-width: 70%;">
+  <div class="d-flex w-100 align-items-center justify-content-center" style="margin-top: 3vh;" >
+    <div class="d-flex align-items-center justify-content-center" style="background-color: white; padding: 2vh; border-radius: 1vh; border: 1px solid lightblue; min-width: 80%;">
 
     <table class="table table-striped" style="width: 95%;">
         <thead>
@@ -38,7 +38,7 @@
             <td>{{ turn.turn }}</td>
             <td>{{ turn.speciality }}</td>
             <td>{{ turn.doctor}}</td>
-            <td><p *ngIf="turn.status=='Finalizado'"> {{turn.comment}} </p></td>
+            <td><p *ngIf="turn.status=='Finalizado' || turn.status=='Cancelado' || turn.status=='Rechazado'"> {{turn.comment}} </p></td>
             <td><button *ngIf="turn.history" class="btn-history" (click)="showHistory(turn)"><i class="bi bi-file-earmark-medical"></i></button></td>
           </tr>
         </tbody>
@@ -47,11 +47,5 @@
 </div>
 
 </div>
-<div class="full-height">
-    <div class="overlay">
-        <h1>{{frasesList[frase].title}} </h1>
-        <p class="lead">{{frasesList[frase].text}}</p>
-        <p class="lead" style="text-align: center;"><strong>Tu salud, en las mejores manos.</strong></p>
-      </div>
-    <img class="bkg-img" src="assets/medicwallpaper.jpg">
-</div>
+
+<app-backgroundimage></app-backgroundimage>

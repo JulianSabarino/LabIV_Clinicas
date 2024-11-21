@@ -23,27 +23,6 @@ export class RegisterComponent {
 
   selectedCountry: string | null = null;
   
-  isMedic: boolean = false;
-
-  especialidades:any[] = 
-  [
-    {
-      name: "Veterinario",
-      isChecked: false
-    },
-    {
-      name: "Clinico",
-      isChecked: false
-    },
-    {
-      name: "Osteospatia",
-      isChecked: false
-    },
-    {
-      name: "Psicologia",
-      isChecked: false
-    },
-  ]
 
   form = new FormGroup({
     mail: new FormControl('',[Validators.required]),
@@ -52,19 +31,9 @@ export class RegisterComponent {
     document: new FormControl('',[Validators.required]),
     age: new FormControl('',this.ageMinValidator(18)),
     password: new FormControl('',[Validators.required]),
-    obraSocial: new FormControl('',this.obraSocialValidator())
+    obraSocial: new FormControl('',[Validators.required])
   })
 
-  obraSocialValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      console.log(control)
-      if (!this.isMedic && !control.value) {
-        return { required: true }; // Return an error if obraSocial is not filled and isMedic is false
-      }
-
-      return null; // Return null if the input is valid
-    };
-  }
 
   ageMinValidator(minAge: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -83,12 +52,6 @@ export class RegisterComponent {
     this.spinner.show();
     if(this.form.valid)
     {
-      let infoUser;
-      if(this.isMedic)
-        infoUser = this.especialidades;
-      else
-        infoUser = [this.form.value.obraSocial];
-
       let user: User = 
       {
         mail:this.form.value.mail as string,
@@ -96,9 +59,9 @@ export class RegisterComponent {
         surename: this.form.value.surname as string,
         age: this.form.value.age as string,
         dni: this.form.value.document as string,
-        medic: this.isMedic,
+        medic: false,
         admin: false,
-        info: infoUser,
+        info: [this.form.value.obraSocial],
         image:["",""]
       }
       //console.log(user);
@@ -132,21 +95,6 @@ export class RegisterComponent {
       //this.imagen = file
   }
 }
-
-  checkMedic()
-  {
-    this.isMedic = !this.isMedic;
-    console.log(this.isMedic)
-  }
-
-
-  addRemoveSpeciality(especialidad: any) {
-    
-    if(especialidad.isChecked) especialidad.isChecked=false;
-    else especialidad.isChecked=true;
-
-    console.log(this.especialidades);
-  }
 
   
 }

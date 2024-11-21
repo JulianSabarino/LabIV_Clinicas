@@ -26,4 +26,5 @@ export const rightLeftAnimation = [
       animate('2s 500ms', style({ opacity: 1, transform: 'translateX(0%)' })) // Move to original position and fade in
     ])
   ])
+  
 ];

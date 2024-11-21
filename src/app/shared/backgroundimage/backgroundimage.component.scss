@@ -1,0 +1,13 @@
+.full-screen{
+    top: 0;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-image: url('/assets/mosaic.jpg');
+    opacity: 0.2;
+    background-repeat: repeat; /* Repeats the image to create the mosaic effect */
+    background-size: auto; /* Keeps the image size as it is */
+    background-position: top left; /* Ensures it starts at the top-left corner */
+    z-index: -1;
+  }

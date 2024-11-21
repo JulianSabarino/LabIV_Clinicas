@@ -6,11 +6,12 @@ import { TurnDetailed } from '../../../models/user/turn.model';
 import { CommonModule } from '@angular/common';
 import { ShowhistoryComponent } from '../../../shared/showhistory/showhistory.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
 
 @Component({
   selector: 'app-mypage',
   standalone: true,
-  imports: [NgxSpinnerModule,CommonModule],
+  imports: [NgxSpinnerModule,CommonModule, BackgroundimageComponent],
   templateUrl: './mypage.component.html',
   styleUrl: './mypage.component.scss'
 })

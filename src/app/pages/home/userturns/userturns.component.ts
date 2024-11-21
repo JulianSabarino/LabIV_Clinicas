@@ -9,11 +9,12 @@ import { ScheduleService } from '../../../services/schedule.service';
 import { TurnDetailed } from '../../../models/user/turn.model';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
 
 @Component({
   selector: 'app-userturns',
   standalone: true,
-  imports: [CommonModule, NgxSpinnerModule],
+  imports: [CommonModule, NgxSpinnerModule, BackgroundimageComponent],
   templateUrl: './userturns.component.html',
   styleUrl: './userturns.component.scss',
 })
