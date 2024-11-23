@@ -28,6 +28,7 @@
             <th>Turno</th>
             <th>Especialidad</th>
             <th>Doctor</th>
+            <th>Estado</th>
             <th>Comentario</th>
             <th>Historial</th>
           </tr>
@@ -38,6 +39,7 @@
             <td>{{ turn.turn }}</td>
             <td>{{ turn.speciality }}</td>
             <td>{{ turn.doctor}}</td>
+            <td>{{ turn.status}}</td>
             <td><p *ngIf="turn.status=='Finalizado' || turn.status=='Cancelado' || turn.status=='Rechazado'"> {{turn.comment}} </p></td>
             <td><button *ngIf="turn.history" class="btn-history" (click)="showHistory(turn)"><i class="bi bi-file-earmark-medical"></i></button></td>
           </tr>

@@ -18,7 +18,7 @@ export class ScheduleService {
   "13:30"];
 
   private _turnList = new BehaviorSubject<TurnDetailed[]>([]); //Use BehaviorSubject
-  turnList$: Observable<any[]> = this._turnList.asObservable(); //Expose as observable
+  turnList$: Observable<TurnDetailed[]> = this._turnList.asObservable(); //Expose as observable
 
 
   turnList: TurnDetailed[] = [];

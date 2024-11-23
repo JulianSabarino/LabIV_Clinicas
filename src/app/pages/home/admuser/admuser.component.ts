@@ -22,12 +22,16 @@ import { TurndategeneratorComponent } from '../../../components/turndategenerato
 import * as FileSaver from 'file-saver';
 import { MatDialog } from '@angular/material/dialog';
 import { CreatenewadminComponent } from '../../../shared/createnewadmin/createnewadmin.component';
+import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
+import { ScheduleService } from '../../../services/schedule.service';
+import { TurnDetailed } from '../../../models/user/turn.model';
+import { UserturnlistComponent } from '../../../shared/userturnlist/userturnlist.component';
 
 
 @Component({
   selector: 'app-admuser',
   standalone: true,
-  imports: [CommonModule,NgxSpinnerModule,UserinfoPipe,AgePipe,AdminregisterComponent,TurndategeneratorComponent],
+  imports: [CommonModule,NgxSpinnerModule,UserinfoPipe,AgePipe,AdminregisterComponent,TurndategeneratorComponent, BackgroundimageComponent],
   templateUrl: './admuser.component.html',
   styleUrl: './admuser.component.scss'
 })
@@ -36,11 +40,13 @@ export class AdmuserComponent implements OnInit{
   authService = inject(AuthService);
   spinner = inject(NgxSpinnerService);
   dialog = inject(MatDialog);
+  scheduleService = inject(ScheduleService);
   selectedUser: any | null;
 
   async ngOnInit() {
     this.spinner.show();
     await this.authService.getUserList();
+    await this.scheduleService.getTurns();
     this.spinner.hide();
   }
 
@@ -99,5 +105,22 @@ export class AdmuserComponent implements OnInit{
     console.log(dialogRef);
 
   }
+
+  async openUserTurnList(user: any)
+{
+  let userTurns: TurnDetailed[] = [];
+  this.scheduleService.turnList.forEach(turn => {
+    if(turn.patient==user.userInfo.mail && turn.status != "Rechazado")
+      userTurns.push(turn);
+  });
+
+  const dialogRef = this.dialog.open(UserturnlistComponent, {
+    backdropClass: 'no-backdrop',  // This will make the backdrop invisible
+    panelClass: 'centered-dialog', // Apply custom class for centering
+    hasBackdrop: false,  // Option
+    data: {turns:userTurns}
+  });
+
+}
   
 }

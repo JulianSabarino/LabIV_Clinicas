@@ -7,6 +7,8 @@ import { ScheduleService } from '../../../services/schedule.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { CancelturnComponent } from '../../../shared/cancelturn/cancelturn.component';
+import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
+import { ImprovedturnfullfilterPipe } from '../../../pipes/improvedturnfullfilter.pipe';
 
 @Component({
   selector: 'app-adminturns',
@@ -14,7 +16,10 @@ import { CancelturnComponent } from '../../../shared/cancelturn/cancelturn.compo
   imports: [CommonModule,
     NgxSpinnerComponent,
     SpecialityfilterPipe,
-    FormsModule],
+    FormsModule,
+    BackgroundimageComponent,
+    ImprovedturnfullfilterPipe
+  ],
   templateUrl: './adminturns.component.html',
   styleUrl: './adminturns.component.scss'
 })

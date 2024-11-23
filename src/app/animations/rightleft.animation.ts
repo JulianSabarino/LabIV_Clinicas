@@ -7,11 +7,11 @@ export const rightLeftAnimation =
       transition('* => *', [
         query(':enter', [
           style({ opacity: 0, transform: 'translateX(100%)' }),  // Start from right, fully transparent
-          animate('700ms 500ms', style({ opacity: 1, transform: 'translateX(0)' })) // Move to original position and fade in
+          animate('3s', style({ opacity: 1, transform: 'translateX(0)' })) // Move to original position and fade in
         ]),
         query(':leave', [
-          style({ opacity: 0, transform: 'translateX(-100%)' }),  // Start from right, fully transparent
-          animate('700ms 500ms', style({ opacity: 1, transform: 'translateX(0)' })) // Move to original position and fade in
+          style({ opacity: 0, transform: 'translateX(0%)' }),  // Start from right, fully transparent
+          animate('3s', style({ opacity: 1, transform: 'translateX(100%)' })) // Move to original position and fade in
         ])
       ])
     ])
@@ -23,8 +23,9 @@ export const rightLeftAnimation = [
     // When the element enters
     transition(':enter', [
       style({ opacity: 0, transform: 'translateX(100%)' }),  // Start from right, fully transparent
-      animate('2s 500ms', style({ opacity: 1, transform: 'translateX(0%)' })) // Move to original position and fade in
+      animate('2s', style({ opacity: 1, transform: 'translateX(0%)' })) // Move to original position and fade in
     ])
   ])
   
 ];
+

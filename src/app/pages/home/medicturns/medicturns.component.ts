@@ -11,6 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { MotiveturnComponent } from '../../../shared/motiveturn/motiveturn.component';
 import { CloseturnComponent } from '../../../shared/closeturn/closeturn.component';
 import { CloseturnwithstoryComponent } from '../../../shared/closeturnwithstory/closeturnwithstory.component';
+import { Subscription } from 'rxjs';
+import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
+import { ImprovedturnfullfilterPipe } from '../../../pipes/improvedturnfullfilter.pipe';
 
 @Component({
   selector: 'app-medicturns',
@@ -18,7 +21,10 @@ import { CloseturnwithstoryComponent } from '../../../shared/closeturnwithstory/
   imports: [CommonModule,
     NgxSpinnerComponent,
     SpecialityfilterPipe,
-    FormsModule],
+    FormsModule,
+    BackgroundimageComponent,
+    ImprovedturnfullfilterPipe
+  ],
   templateUrl: './medicturns.component.html',
   styleUrl: './medicturns.component.scss'
 })
@@ -34,23 +40,25 @@ export class MedicturnsComponent implements OnInit{
   myTurnsList: any[] = []
   cancelComentary: string = "";
 
+  private turnListSubscription: Subscription | undefined;  // Add subscription property
+
   async ngOnInit() {
-
     this.spinner.show();
-
-    this.scheduleSvc.getTurns();
-
-    this.scheduleSvc.turnList.forEach(turn => {
-      if(turn.doctor == this.authSvc.userProfile?.mail)
-      {
-        console.log(turn)
-        this.myTurnsList.push(turn);
-      }
-    });
-
+    this.loadTurns();
+    await this.scheduleSvc.getTurns();
+    console.log(this.turnListSubscription)
     this.spinner.hide();
 
   }
+
+  async loadTurns()
+  {
+    this.turnListSubscription = this.scheduleSvc.turnList$.subscribe(turns => {
+      this.myTurnsList = turns.filter(turn => turn.doctor === this.authSvc.userProfile?.mail);
+      console.log("estoy observado" + this.myTurnsList);
+    });
+  }
+
 
   async declineTurn(turn: any)
   {
@@ -64,9 +72,14 @@ export class MedicturnsComponent implements OnInit{
     dialogRef.afterClosed().subscribe(async result => {
       console.log('The dialog was closed');
       if (result !== undefined) {
+        this.spinner.show();
         this.cancelComentary  = result;
         //await this.scheduleSvc.declineTurn(turn,this.cancelComentary);
         await this.scheduleSvc.advanceTurn(turn,this.cancelComentary,"Rechazado");
+        await this.scheduleSvc.getTurns();
+        await this.loadTurns();
+        this.toastSvc.info("Rechazo", "Turno rechazado exitosamente");
+        this.spinner.hide();
         console.log(this.cancelComentary);
       }
     });
@@ -74,8 +87,13 @@ export class MedicturnsComponent implements OnInit{
 
   async acceptTurn(turn: any)
   {
-    //await this.scheduleSvc.acceptTurn(turn);
+    this.spinner.show();
     await this.scheduleSvc.advanceTurn(turn,"","Aceptado");
+    await this.scheduleSvc.getTurns();
+    await this.loadTurns();
+    this.toastSvc.success("Exito", "Turno aceptado exitosamente");
+    this.spinner.hide();
+
   }
   
   async endTurn(turn: any)
@@ -108,6 +126,11 @@ export class MedicturnsComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(async result => {
       console.log('The dialog was closed');
+      this.spinner.show();
+      await this.scheduleSvc.getTurns();
+      await this.loadTurns();
+      //this.toastSvc.success("Exito", "Turno aceptado exitosamente");
+      this.spinner.hide();
 
     });
   }

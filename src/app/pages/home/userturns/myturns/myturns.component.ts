@@ -11,6 +11,10 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MotiveturnComponent } from '../../../../shared/motiveturn/motiveturn.component';
 import { ReviewturnComponent } from '../../../../shared/reviewturn/reviewturn.component';
 import { from, Observable, Subscription } from 'rxjs';
+import { BackgroundimageComponent } from '../../../../shared/backgroundimage/backgroundimage.component';
+import { TurnDetailed } from '../../../../models/user/turn.model';
+import { ImprovedturnfullfilterPipe } from '../../../../pipes/improvedturnfullfilter.pipe';
+import { ShowhistoryComponent } from '../../../../shared/showhistory/showhistory.component';
 
 
 
@@ -20,7 +24,10 @@ import { from, Observable, Subscription } from 'rxjs';
   imports: [CommonModule,
     NgxSpinnerComponent,
     SpecialityfilterPipe,
-    FormsModule],
+    FormsModule,
+    BackgroundimageComponent,
+    ImprovedturnfullfilterPipe 
+  ],
   templateUrl: './myturns.component.html',
   styleUrl: './myturns.component.scss'
 })
@@ -33,7 +40,7 @@ export class MyturnsComponent implements OnInit{
   busqueda: string ="";
   dialog = inject(MatDialog);
 
-  myTurnsList: any[] = []
+  myTurnsList: TurnDetailed[] = []
   cancelComentary: string = "";
 
   private turnListSubscription: Subscription | undefined;  // Add subscription property
@@ -68,11 +75,14 @@ export class MyturnsComponent implements OnInit{
     dialogRef.afterClosed().subscribe(async result => {
       console.log('The dialog was closed');
       if (result !== undefined) {
+        this.spinner.show();
         this.cancelComentary  = result;
         //await this.scheduleSvc.cancelTurn(turn,this.cancelComentary);
         await this.scheduleSvc.advanceTurn(turn,this.cancelComentary,"Cancelado")
         this.toastSvc.success("Turno cancelado con exito","Cancelación de Turno");
+        await this.scheduleSvc.getTurns();
         await this.loadTurns();
+        this.spinner.hide();
       }
     });
   }
@@ -100,14 +110,31 @@ export class MyturnsComponent implements OnInit{
     dialogRef.afterClosed().subscribe(async result => {
       console.log('The dialog was closed');
       if (result !== undefined) {
+        this.spinner.show();
         let reviewComment  = result;
         console.log(turn);
         //await this.scheduleSvc.reviewTurn(turn,reviewComment);
         await this.scheduleSvc.advanceTurn(turn,reviewComment,"Finalizado");
+        this.toastSvc.success("Reseña entregada","Reseña");
+        await this.scheduleSvc.getTurns();
+        await this.loadTurns();
         console.log(reviewComment);
+        this.spinner.hide();
       }
     });
 
+  }
+
+  viewHistory(turn: any)
+  {
+    console.log(turn);
+    const dialogRef = this.dialog.open(ShowhistoryComponent, {
+      backdropClass: 'no-backdrop',  // This will make the backdrop invisible
+      panelClass: 'centered-dialog', // Apply custom class for centering
+      hasBackdrop: false,  // Option
+      data: {turn:turn}
+    });
+    //console.log(dialogRef);
   }
 
 }

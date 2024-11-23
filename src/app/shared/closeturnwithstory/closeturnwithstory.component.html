@@ -52,6 +52,15 @@
                         value="" required="" fdprocessedid="g20eu" [ngModelOptions]="{standalone: true}">
                 </div>
             </div>
+            <div class="col-sm-6" *ngIf="(keyTwo!='' && valueTwo!='')">
+                <label for="age" class="form-label">Adicional 3 (Clave | Valor)</label>
+                <div class="d-flex">
+                    <input  [(ngModel)]="keyThree" type="text" class="form-control" placeholder=""
+                        value="" required="" fdprocessedid="g20eu" [ngModelOptions]="{standalone: true}">
+                    <input  [(ngModel)]="valueThree" type="text" class="form-control" placeholder=""
+                        value="" required="" fdprocessedid="g20eu" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
 
         </div>
 

@@ -1,0 +1,18 @@
+<div class="container" style="border-radius: 3vh; border: 2px solid lightblue;">
+    <div [@rightLeftAnimation] >
+
+        <div>
+          <div class="align-items-center" style="text-align: center;">
+            <h1>Turnos on-line</h1>
+            <p class="lead"> Registrate en la página y saca turno para las distintas espaecialidades en todos los sanatorios.</p>
+            <div class="d-flex align-items-center  justify-content-center">
+              <img class="register-img" src="assets/doctor.jpg" (click)="router.goto('auth/registerdoc')">
+              <img class="register-img" src="assets/user.jpg" (click)="router.goto('auth/register')">
+            </div>
+          </div>
+        </div>
+  
+    </div>
+  </div>
+  
+  <app-backgroundimage></app-backgroundimage>

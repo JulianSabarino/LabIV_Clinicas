@@ -7,6 +7,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { CommonModule } from '@angular/common';
 import { TurnDetailed } from '../../models/user/turn.model';
 import { ScheduleService } from '../../services/schedule.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-closeturnwithstory',
@@ -20,6 +21,7 @@ export class CloseturnwithstoryComponent {
   utilsService = inject(UtilsService);
   scheduleSvc = inject(ScheduleService);
   spinner = inject(NgxSpinnerService);
+  toastSvc = inject(ToastrService);
 
   turn?: TurnDetailed
   commentary: string = "";
@@ -27,6 +29,8 @@ export class CloseturnwithstoryComponent {
   valueOne: string = "";
   keyTwo: string = "";
   valueTwo: string = "";
+  keyThree: string = "";
+  valueThree: string = "";
 
   constructor(private dialogRef: MatDialogRef<CloseturnwithstoryComponent> , @Inject(MAT_DIALOG_DATA) public data: { turn: TurnDetailed})
   {
@@ -53,7 +57,11 @@ export class CloseturnwithstoryComponent {
       {
         other[this.keyOne] = this.valueOne
         if(this.keyTwo != "" && this.valueTwo != "")
+        {
           other[this.keyTwo] = this.valueTwo
+          if(this.keyThree != "" && this.valueThree != "")
+            other[this.keyThree] = this.valueThree
+        }
 
       }
 
@@ -73,7 +81,8 @@ export class CloseturnwithstoryComponent {
       }
       try
       {
-        this.scheduleSvc.historyTurn(this.turn,history)
+        await this.scheduleSvc.historyTurn(this.turn,history);
+        this.toastSvc.success("Se cargo con exito","Exito");
       }
       catch
       {
@@ -86,6 +95,7 @@ export class CloseturnwithstoryComponent {
       console.log("error en el form")
     }
 
+    this.dialogRef.close();
     this.spinner.hide();
   }
 

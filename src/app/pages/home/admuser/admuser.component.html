@@ -15,6 +15,7 @@
             <th>Es Medico</th>
             <th>Detalles</th>
             <th>Activo</th>
+            <th>Turnos</th>
           </tr>
         </thead>
         <tbody>
@@ -36,6 +37,7 @@
                 <input [checked]="user.active" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" (change)="disableAccount(user)" *ngIf="user.userInfo.medic">
                 </div>
             </td>
+            <td><button type="button" (click)="openUserTurnList(user)" *ngIf="!(user.userInfo.medic || user.userInfo.admin)"><i class="bi bi-calendar-heart" ></i></button></td>
           </tr>
         </tbody>
       </table>
@@ -48,3 +50,6 @@
     <button class="btn btn-primary btn-lg" type="button" style="width: 30%;" (click)="exportCSV()">Exportar como CSV</button>
 </div>
   </div>
+
+
+  <app-backgroundimage></app-backgroundimage>

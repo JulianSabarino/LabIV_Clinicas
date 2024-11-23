@@ -16,6 +16,7 @@ import { HighlightmedicsDirective } from '../../../../directives/highlightmedics
 
 import * as FileSaver from 'file-saver';
 import { TurnDetailed } from '../../../../models/user/turn.model';
+import { BackgroundimageComponent } from '../../../../shared/backgroundimage/backgroundimage.component';
 
 @Component({
   selector: 'app-usercards',
@@ -26,7 +27,8 @@ import { TurnDetailed } from '../../../../models/user/turn.model';
     UserfilterPipe,
     FormsModule,
     AgePipe,
-    HighlightmedicsDirective
+    HighlightmedicsDirective,
+    BackgroundimageComponent
   ],
   templateUrl: './usercards.component.html',
   styleUrl: './usercards.component.scss'

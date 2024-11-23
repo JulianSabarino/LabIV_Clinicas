@@ -4,38 +4,47 @@
     </div>
 
     <div class="card-body">
-        <ul class="list-unstyled mt-3 mb-4">
-            <li>
-                <h6 class="my-0">Altura</h6>
-            </li>
-            <li>
-                <h4 class="my-0">{{turn?.history?.hight}} Cm</h4>
-            </li>
-        </ul>
-        <ul class="list-unstyled mt-3 mb-4">
-            <li>
-                <h6 class="my-0">Peso</h6>
-            </li>
-            <li>
-                <h4 class="my-0">{{turn?.history?.weight}} Kg</h4>
-            </li>
-        </ul>
-        <ul class="list-unstyled mt-3 mb-4">
-            <li>
-                <h6 class="my-0">Temperatura</h6>
-            </li>
-            <li>
-                <h4 class="my-0">{{turn?.history?.temperature}} °C</h4>
-            </li>
-        </ul>
-        <ul class="list-unstyled mt-3 mb-4">
-            <li>
-                <h6 class="my-0">Presion</h6>
-            </li>
-            <li>
-                <h4 class="my-0">{{turn?.history?.pressure}}</h4>
-            </li>
-        </ul>
+        <!-- Row 1: Altura and Peso -->
+        <div class="d-flex flex-row justify-content-between mt-3 mb-4">
+            <ul class="list-unstyled w-45">
+                <li>
+                    <h6 class="my-0">Altura</h6>
+                </li>
+                <li>
+                    <h4 class="my-0">{{turn?.history?.hight}} Cm</h4>
+                </li>
+            </ul>
+            <ul class="list-unstyled w-45">
+                <li>
+                    <h6 class="my-0">Peso</h6>
+                </li>
+                <li>
+                    <h4 class="my-0">{{turn?.history?.weight}} Kg</h4>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Row 2: Temperatura and Presion -->
+        <div class="d-flex flex-row justify-content-between mt-3 mb-4">
+            <ul class="list-unstyled w-45">
+                <li>
+                    <h6 class="my-0">Temperatura</h6>
+                </li>
+                <li>
+                    <h4 class="my-0">{{turn?.history?.temperature}} °C</h4>
+                </li>
+            </ul>
+            <ul class="list-unstyled w-45">
+                <li>
+                    <h6 class="my-0">Presion</h6>
+                </li>
+                <li>
+                    <h4 class="my-0">{{turn?.history?.pressure}}</h4>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Row 3: Otros -->
         <ul class="list-unstyled mt-3 mb-4">
             <li>
                 <h6 class="my-0">Otros</h6>
@@ -43,6 +52,7 @@
             <li *ngFor="let item of otherList" class="d-flex">
                 <i class="bi bi-play-fill"></i>
                 <h4 class="my-0" *ngIf="item[0] != 'commentary'">{{item[0]}}: </h4>
+                <h4 class="my-0" *ngIf="item[0] == 'commentary'">Comentario: </h4>
                 <h4 class="my-0">{{item[1]}}</h4>
             </li>
         </ul>
