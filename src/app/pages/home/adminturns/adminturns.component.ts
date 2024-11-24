@@ -9,16 +9,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { CancelturnComponent } from '../../../shared/cancelturn/cancelturn.component';
 import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
 import { ImprovedturnfullfilterPipe } from '../../../pipes/improvedturnfullfilter.pipe';
+import { TypeofturnDirective } from '../../../directives/typeofturn.directive';
 
 @Component({
   selector: 'app-adminturns',
   standalone: true,
   imports: [CommonModule,
     NgxSpinnerComponent,
-    SpecialityfilterPipe,
     FormsModule,
     BackgroundimageComponent,
-    ImprovedturnfullfilterPipe
+    ImprovedturnfullfilterPipe,
+    TypeofturnDirective
   ],
   templateUrl: './adminturns.component.html',
   styleUrl: './adminturns.component.scss'

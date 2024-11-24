@@ -15,6 +15,7 @@ import { BackgroundimageComponent } from '../../../../shared/backgroundimage/bac
 import { TurnDetailed } from '../../../../models/user/turn.model';
 import { ImprovedturnfullfilterPipe } from '../../../../pipes/improvedturnfullfilter.pipe';
 import { ShowhistoryComponent } from '../../../../shared/showhistory/showhistory.component';
+import { StateofturnDirective } from '../../../../directives/stateofturn.directive';
 
 
 
@@ -23,10 +24,10 @@ import { ShowhistoryComponent } from '../../../../shared/showhistory/showhistory
   standalone: true,
   imports: [CommonModule,
     NgxSpinnerComponent,
-    SpecialityfilterPipe,
     FormsModule,
     BackgroundimageComponent,
-    ImprovedturnfullfilterPipe 
+    ImprovedturnfullfilterPipe,
+    StateofturnDirective 
   ],
   templateUrl: './myturns.component.html',
   styleUrl: './myturns.component.scss'

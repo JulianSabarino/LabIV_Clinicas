@@ -13,8 +13,8 @@
     <div class="row row-cols-1 row-cols-md-3 mb-3" style="justify-content: center;">
 
         <div class="col" *ngFor="let turn of myTurnsList  | improvedturnfullfilter: busqueda">
-            <div class="card mb-4 rounded-3 shadow-sm">
-                <div class="card-header py-3">
+            <div class="card mb-4 rounded-3 shadow-sm" >
+                <div class="card-header py-3" [appStateofturn]="turn">
                     <h4 class="my-0 fw-normal text-center">{{turn.speciality}}</h4>
                 </div>
 

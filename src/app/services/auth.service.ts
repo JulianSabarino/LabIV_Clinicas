@@ -9,6 +9,7 @@ import { Observable, Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UtilsService } from './utils.service';
 import { Especialidades } from '../models/user/medicspeciality.model';
+import { LogLog } from '../models/user/loglog.model';
 
 @Injectable({
   providedIn: 'root'
@@ -170,6 +171,8 @@ export class AuthService {
           }else
           {
             this.loggedUser = res.user;
+            if(this.userProfile)
+              this.createLoginLog(this.userProfile);
             //console.log(this.loggedUser);
             //console.log(this.userProfile);
             console.log(this.loggedUser.emailVerified);
@@ -181,6 +184,57 @@ export class AuthService {
     {
       throw error;
     }
+  }
+
+  async createLoginLog(user:User)
+  {
+
+    let path = `loggedInfo/${user.mail}`;
+
+    try {
+      const docSnapshot = await  getDoc(doc(getFirestore(),path)); // Fetch the document
+      let tempDate = new Date();
+      let newLog: LogLog
+  
+      if (docSnapshot.exists()) {
+        const data = docSnapshot.data(); // Get the document data
+  
+        // Map the data to userProfile
+        newLog = data as LogLog;
+        newLog.logHistory.push(
+          {
+            logDayHour: tempDate.toString()
+          }
+        )
+
+        await updateDoc(doc(getFirestore(),path),{
+          logHistory: newLog.logHistory
+        })
+
+      } else {
+        
+        newLog = {
+          user: user.mail,
+          logHistory:[
+            {
+              logDayHour : tempDate.toString()
+            }
+          ]
+        }
+
+        await setDoc(doc(getFirestore(),path),
+        {
+          user: newLog.user,
+          logHistory: newLog.logHistory
+    })
+
+
+      }
+    } catch (error) {
+      console.error('Error fetching user info:', error);
+      throw error; // Propagate the error to the caller
+    }
+
   }
 
   logout(noToast?: boolean) {
