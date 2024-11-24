@@ -1,0 +1,7 @@
+<div *ngIf="chartData && chartData.categories && chartData.data">
+
+    <highcharts-chart
+    [Highcharts]="Highcharts"
+    [options]="chartOptions"
+    style="width: 30%; height: 400px; display: block;">
+</highcharts-chart>

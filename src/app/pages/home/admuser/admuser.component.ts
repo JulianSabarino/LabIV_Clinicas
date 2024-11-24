@@ -26,12 +26,13 @@ import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgr
 import { ScheduleService } from '../../../services/schedule.service';
 import { TurnDetailed } from '../../../models/user/turn.model';
 import { UserturnlistComponent } from '../../../shared/userturnlist/userturnlist.component';
+import { GraphicsComponent } from '../../../shared/graphics/graphics.component';
 
 
 @Component({
   selector: 'app-admuser',
   standalone: true,
-  imports: [CommonModule,NgxSpinnerModule,UserinfoPipe,AgePipe,AdminregisterComponent,TurndategeneratorComponent, BackgroundimageComponent],
+  imports: [CommonModule,NgxSpinnerModule,UserinfoPipe,AgePipe,AdminregisterComponent,TurndategeneratorComponent, BackgroundimageComponent, GraphicsComponent],
   templateUrl: './admuser.component.html',
   styleUrl: './admuser.component.scss'
 })

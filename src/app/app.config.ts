@@ -1,4 +1,5 @@
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';//Loading spinner
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';

@@ -1,0 +1,12 @@
+
+<app-turnsperspeciality></app-turnsperspeciality>
+
+<div *ngIf="turnsPD_CD && turnsPD_CD.categories && turnsPD_CD.data">
+
+<highcharts-chart
+    [Highcharts]="turnsPD_HC"
+    [options]="turnsPD_CO"
+    style="width: 30%; height: 400px; display: block;">
+</highcharts-chart>
+
+</div>
