@@ -34,23 +34,23 @@ export class TurnsperspecialityComponent implements OnInit{
         type: 'column'  // Set chart type to 'column'
       },
       title: {
-        text: 'Turns per Speciality'
+        text: 'Turnos por Especialidad'
       },
       xAxis: {
         categories: this.chartData?.categories,  // Categories for the x-axis (specialities)
         title: {
-          text: 'Speciality'
+          text: 'Especialidad'
         }
       },
       yAxis: {
         min: 0,  // Ensure y-axis starts from 0
         title: {
-          text: 'Number of Turns'
+          text: 'Cantidad'
         },
         tickInterval: 1
       },
       series: [{
-        name: 'Turns',
+        name: 'Turnos',
         data: this.chartData?.data,
         type: 'column'  // Data (number of turns per speciality)
       }]

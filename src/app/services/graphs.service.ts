@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ScheduleService } from './schedule.service';
+import { User } from '../models/user/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +55,81 @@ export class GraphsService {
     };
 
   }
+
+  async turnsAskedInRange(dateS: string, dateE: string, medic: string)
+  {
+    let startD = this.convertDateStringToDate(dateS);
+    let endD = this.convertDateStringToDate(dateE);
+    
+    let cantTurns = 0;
+    
+    if (!startD || !endD) {
+      return -1; // Or throw an error, depending on your error handling strategy.
+    }
+    
+    await this.scheduleSvc.getTurns();
+    
+    this.scheduleSvc.turnList.forEach(turn => {
+
+      let tdate=this.convertDateStringToDate(turn.date);
+
+      if(tdate && tdate > startD && tdate < endD && turn.doctor == medic)
+        cantTurns+=1
+
+    });
+  
+    return cantTurns
+  }
+  async turnsFinishedInRange(dateS: string, dateE: string, medic: string)
+  {
+    let startD = this.convertDateStringToDate(dateS);
+    let endD = this.convertDateStringToDate(dateE);
+    
+    let cantTurns = 0;
+    
+    if (!startD || !endD) {
+      return -1; // Or throw an error, depending on your error handling strategy.
+    }
+    
+    await this.scheduleSvc.getTurns();
+    
+    this.scheduleSvc.turnList.forEach(turn => {
+
+      let tdate=this.convertDateStringToDate(turn.date);
+
+      if(tdate && tdate > startD && tdate < endD && turn.doctor == medic && turn.status == "Finalizado")
+        cantTurns+=1
+
+    });
+  
+    return cantTurns
+  }
+
+
+
+  convertDateStringToDate(dateString: string): Date | null {
+    const parts = dateString.split("/");
+    if (parts.length !== 3) {
+      return null; //Invalid format
+    }
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed in JavaScript Date
+    const year = parseInt(parts[2], 10);
+  
+    //Validate date parts.  Optional but recommended for robustness.
+    if(isNaN(day) || isNaN(month) || isNaN(year) || day < 1 || day > 31 || month < 0 || month > 11){
+      return null;
+    }
+  
+    const date = new Date(year, month, day);
+  
+    //Check if the created date is valid. This handles invalid dates like Feb 30th.
+    if (date.getDate() !== day || date.getMonth() !== month || date.getFullYear() !== year) {
+      return null;
+    }
+  
+    return date;
+  }
+
 
 }

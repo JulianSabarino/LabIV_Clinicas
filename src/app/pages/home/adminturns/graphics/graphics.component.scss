@@ -1,0 +1,12 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 equal columns */
+    grid-gap: 10px; /* Adjust gap as needed */
+  }
+  
+  .grid-item {
+    /* Add any additional styling for your components here */
+    border: 1px solid #ccc; /* Optional: Add borders for visual clarity */
+    padding: 10px;
+    background-color: lightblue;
+  }

@@ -35,6 +35,9 @@
         <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin"
         (click)="router.goto('home/adminturns')">Todos los Turnos</button>
 
+        <button class="nav-item nav-link" *ngIf="authService.userProfile?.admin"
+        (click)="router.goto('home/adminturns/graphics')">Graficos</button>
+
         
     </div>
     <div class="navbar-nav">

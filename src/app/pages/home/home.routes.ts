@@ -24,7 +24,7 @@ export const routes: Routes = [
     },
     {
         path: 'adminturns',
-        loadComponent: ()=> import('../home/adminturns/adminturns.component').then(m=>m.AdminturnsComponent)
+        loadChildren: ()=> import('../home/adminturns/adminturns.routes').then(m=>m.routes)
     },
     {
         path: 'mypage',
