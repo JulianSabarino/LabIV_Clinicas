@@ -10,11 +10,13 @@ import { TurnDetailed } from '../../../models/user/turn.model';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
+import { CaptchaenablerDirective } from '../../../directives/captchaenabler.directive';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-userturns',
   standalone: true,
-  imports: [CommonModule, NgxSpinnerModule, BackgroundimageComponent],
+  imports: [CommonModule, NgxSpinnerModule, BackgroundimageComponent, CaptchaenablerDirective, FormsModule],
   templateUrl: './userturns.component.html',
   styleUrl: './userturns.component.scss',
 })
@@ -27,8 +29,10 @@ export class UserturnsComponent implements OnInit{
   
   selectedSpeciality: any;
   selectedMedic:any;
+  selectedUser:any;
   selectedTurn:any;
   medicList: any[] = [];
+  userList: any[] = []
   selectedEspecialidad?: Especialidades;
   formattedTurns: any[] = [
     {
@@ -43,6 +47,11 @@ export class UserturnsComponent implements OnInit{
     await this.especialidadesSrv.getEspecialidadesList();
     await this.authSrv.getUserList();
     await this.scheduleSrv.getTurns();
+
+    this.authSrv.userList.forEach(user => {
+      if(!user.userInfo.medic)
+        this.userList.push(user)
+    });
 
     console.log(this.scheduleSrv.turnList);
   }
@@ -184,6 +193,12 @@ export class UserturnsComponent implements OnInit{
     
     return validTurn;
   
+  }
+
+
+  selectUser(event: any): void {
+    this.selectedUser = event.target.value;
+    console.log(this.selectedUser);
   }
 
 }

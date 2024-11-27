@@ -8,10 +8,10 @@
     <div class="navbar-nav">
      
         <!-- Usuarios-->
-        <button class="nav-item nav-link" *ngIf="!(authService.userProfile?.medic)"
+        <button class="nav-item nav-link" *ngIf="!(authService.userProfile?.medic || authService.userProfile?.admin)"
         (click)="router.goto('home/mypage')">Mi pagina</button>
         
-        <button class="nav-item nav-link" *ngIf="!(authService.userProfile?.medic || authService.userProfile?.admin)"
+        <button class="nav-item nav-link" *ngIf="!(authService.userProfile?.medic)"
         (click)="router.goto('home/userturns')">Sacar Turno</button>
         
         <button class="nav-item nav-link" *ngIf="!(authService.userProfile?.medic || authService.userProfile?.admin)"
@@ -20,6 +20,9 @@
         <!--Medicos-->
         <button class="nav-item nav-link" *ngIf="authService.userProfile?.medic"
         (click)="router.goto('home/medicturns')">Mis Turnos</button>
+        
+        <button class="nav-item nav-link" *ngIf="authService.userProfile?.medic"
+        (click)="router.goto('home/medicturns/myusers')">Mis Usuarios</button>
         
         <button class="nav-item nav-link" *ngIf="authService.userProfile?.medic"
         (click)="router.goto('home/mypage/medic')">Mi pagina</button>

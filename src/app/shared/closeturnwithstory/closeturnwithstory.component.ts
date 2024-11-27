@@ -32,6 +32,14 @@ export class CloseturnwithstoryComponent {
   keyThree: string = "";
   valueThree: string = "";
 
+  //Sprint 5
+  keyRange: string = "";
+  valueRange: number = 0;
+  keyNumber: string = "";
+  valueNumber: number = 0;
+  keyChecked: string = "";
+  valueChecked: boolean = false;
+
   constructor(private dialogRef: MatDialogRef<CloseturnwithstoryComponent> , @Inject(MAT_DIALOG_DATA) public data: { turn: TurnDetailed})
   {
     this.turn = data.turn;
@@ -66,10 +74,16 @@ export class CloseturnwithstoryComponent {
       }
 
     }
+    if(this.keyRange != "")
+      other[this.keyRange] = String(this.valueRange);
+    if(this.keyNumber != "")
+      other[this.keyNumber] = String(this.valueNumber);
+    if(this.keyChecked != "")
+      other[this.keyNumber] = this.valueChecked ? 'Si' : 'No'
 
     if(this.form.valid)
     {
-
+      console.log("soy valido")
       let history: any = 
       {
         done: true,
@@ -86,6 +100,7 @@ export class CloseturnwithstoryComponent {
       }
       catch
       {
+        this.toastSvc.error("Error al cargar","Error");
         console.log("error");
       }
 
@@ -108,6 +123,21 @@ export class CloseturnwithstoryComponent {
   // Handle "Cancelar" button click
   comment() {
     this.dialogRef.close();  // Return the cancellation comment
+  }
+
+
+  showRange()
+  {
+    console.log(this.valueRange);
+  }
+  showChecked()
+  {
+    if(this.valueChecked)
+      this.valueChecked = false
+    else
+      this.valueChecked = true;
+
+    console.log(this.valueChecked);
   }
 
   

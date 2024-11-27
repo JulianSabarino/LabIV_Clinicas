@@ -36,28 +36,18 @@ export class TurnsperdayComponent implements OnInit{
     // Configure the chart with the data
     this.chartOptions = {
       chart: {
-        type: 'line'  // Set chart type to 'column'
+        type: 'pie'  // Set chart type to 'pie'
       },
       title: {
         text: 'Turnos por Día'
       },
-      xAxis: {
-        categories: this.chartData?.categories,  // Categories for the x-axis (specialities)
-        title: {
-          text: 'Día'
-        }
-      },
-      yAxis: {
-        min: 0,  // Ensure y-axis starts from 0
-        title: {
-          text: 'Cantidad'
-        },
-        tickInterval: 1
-      },
       series: [{
         name: 'Turnos',
-        data: this.chartData?.data,
-        type: 'line'  // Data (number of turns per speciality)
+        data: this.chartData?.data.map((item, index) => ({
+          name: this.chartData?.categories[index], // Assign date or category to the slice label
+          y: item  // The number of turns (value for each slice)
+        })),
+        type: 'pie'  // Data (number of turns per category)
       }]
     };
   }

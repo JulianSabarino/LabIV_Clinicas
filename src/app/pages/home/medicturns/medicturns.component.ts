@@ -14,16 +14,18 @@ import { CloseturnwithstoryComponent } from '../../../shared/closeturnwithstory/
 import { Subscription } from 'rxjs';
 import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
 import { ImprovedturnfullfilterPipe } from '../../../pipes/improvedturnfullfilter.pipe';
+import { TurnDetailed } from '../../../models/user/turn.model';
+import { StateofturnDirective } from '../../../directives/stateofturn.directive';
 
 @Component({
   selector: 'app-medicturns',
   standalone: true,
   imports: [CommonModule,
     NgxSpinnerComponent,
-    SpecialityfilterPipe,
     FormsModule,
     BackgroundimageComponent,
-    ImprovedturnfullfilterPipe
+    ImprovedturnfullfilterPipe,
+    StateofturnDirective
   ],
   templateUrl: './medicturns.component.html',
   styleUrl: './medicturns.component.scss'
@@ -37,7 +39,7 @@ export class MedicturnsComponent implements OnInit{
   busqueda: string ="";
   dialog = inject(MatDialog);
 
-  myTurnsList: any[] = []
+  myTurnsList: TurnDetailed[] = []
   cancelComentary: string = "";
 
   private turnListSubscription: Subscription | undefined;  // Add subscription property

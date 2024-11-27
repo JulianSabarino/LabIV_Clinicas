@@ -56,9 +56,12 @@ export class AdminturnsComponent implements OnInit{
     dialogRef.afterClosed().subscribe(async result => {
       console.log('The dialog was closed');
       if (result !== undefined) {
+        this.spinner.show()
         this.cancelComentary  = result;
         await this.scheduleSvc.cancelTurn(turn,this.cancelComentary);
+        await this.scheduleSvc.getTurns();
         console.log(this.cancelComentary);
+        this.spinner.hide()
       }
     });
   }

@@ -1,5 +1,13 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-loader" [fullScreen] = "true"><p style="color: white" > Cargando... </p></ngx-spinner>
 
+<div class="container" *ngIf="authSrv.userProfile?.admin" style="margin-top: 2vh;">
+  <h3>Seleccionar Usuario</h3>
+  <select class="form-select" id="doctor" required="" fdprocessedid="42e8x5" (change)="selectUser($event)">
+    <option>Seleccionar Medico</option>
+    <option *ngFor="let user of userList" [value]="user.userInfo.mail">{{user.userInfo.mail}}</option>
+  </select>
+</div>
+
 <div class="container" style="margin-top: 5vh;">
     <h1 class="display-5 fw-bold">Sacar Turno</h1>
 
@@ -110,9 +118,10 @@
           <i class="bi bi-calendar2-heart-fill"></i><b> {{selectedTurn.date}} {{selectedTurn.turn}}</b>
         </div>
         <div><b>Doctor: </b>{{selectedMedic.userInfo.mail}}</div>
-        <div><b>Paciente: </b>{{authSrv.userProfile?.mail}}</div>
+        <div *ngIf="!authSrv.userProfile?.admin"><b>Paciente: </b>{{authSrv.userProfile?.mail}}</div>
+        <div *ngIf="authSrv.userProfile?.admin"><b>Paciente: </b>{{ selectedUser}}</div>
         <div><b>Especialidad: </b>{{selectedSpeciality.name}}</div>
-        <div><button class="w-100 btn btn-primary" (click)="getTurn()">Pedir Turno</button></div>
+        <div style="cursor: not-allowed;"><button class="w-100 btn btn-primary" (click)="getTurn()" appCaptchaenabler disabled>Pedir Turno</button></div>
       </div>
     </div>
     

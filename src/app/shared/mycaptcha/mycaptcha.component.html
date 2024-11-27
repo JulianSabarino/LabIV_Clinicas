@@ -1,0 +1,13 @@
+<div class="captcha-container">
+    <p class="captcha-question">Resolvé la ecuación</p>
+    <div class="captcha-text-box">
+      <h2 class="captcha-number">{{ num1 }}</h2>
+      <h4 class="captcha-operator">{{ operator }}</h4>
+      <h2 class="captcha-number">{{ num2 }}</h2>
+      <h4 class="captcha-operator" style="margin-right: 0.5vh;">=</h4>
+      <input type="text" [(ngModel)]="userAnswer" class="captcha-input" placeholder="Answer">
+      <button (click)="checkAnswer()" class="captcha-button">Aceptar</button>
+    </div>
+    <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>
+  
