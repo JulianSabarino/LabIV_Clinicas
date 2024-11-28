@@ -56,6 +56,11 @@ export class ShowhistoryComponent {
       doc.setFontSize(10);
       doc.text('Clinica S', xPosition + 13, yimagePosition + imgHeight);
 
+      const currentDate = new Date();
+      const formattedDate = this.formatDate(currentDate);
+
+      doc.text(formattedDate, 20, 10);
+      
       // Set the opacity for the content that follows
       //doc.setGState({ opacity: 0.25 });
 
@@ -93,6 +98,16 @@ export class ShowhistoryComponent {
     img.onerror = (error) => {
       console.error("Error loading the image", error);
     };
+  }
+
+  formatDate(date: Date): string {
+    const day = ('0' + date.getDate()).slice(-2); // Ensure 2 digits for day
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Ensure 2 digits for month
+    const year = date.getFullYear();
+    const hours = ('0' + date.getHours()).slice(-2); // Ensure 2 digits for hours
+    const minutes = ('0' + date.getMinutes()).slice(-2); // Ensure 2 digits for minutes
+
+    return `${day}/${month}/${year} - ${hours}:${minutes}`;
   }
 
 }
