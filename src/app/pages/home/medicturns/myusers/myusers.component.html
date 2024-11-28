@@ -1,1 +1,16 @@
-<p>myusers works!</p>
+<div class="container align-items-center full-height" style="margin-top: 4vh;">
+
+    <div class="row row-cols-1 row-cols-md-3 mb-3" style="justify-content: center;">
+  
+        <div class="col d-flex flex-column align-items-center" *ngFor="let user of myUsers">
+          <img class="rounded-circle border border-dark" src="assets/user.jpg" alt="Generic placeholder image" width="140" height="140" (click)="openUserTurnList(user)">
+          <h3>{{user.userInfo.name}} {{user.userInfo.surename}}</h3>
+        </div> 
+        
+  
+    </div>
+  
+  </div>
+
+
+  <app-backgroundimage></app-backgroundimage>

@@ -56,6 +56,85 @@ export class GraphsService {
 
   }
 
+
+  async AllTurnsAskedInRange(dateS: string, dateE: string): Promise<{ categories: string[], data: number[] }>
+  {
+    await this.scheduleSvc.getTurns();
+
+    let startD = this.convertDateStringToDate(dateS);
+    let endD = this.convertDateStringToDate(dateE);
+    
+    let countSp: { [key: string]: number } = {};
+    
+    if (!startD || !endD) {
+      let categories = Object.keys(countSp);
+      let data = categories.map(key => countSp[key]);
+      return {categories,data}; // Or throw an error, depending on your error handling strategy.
+    }
+
+
+    this.scheduleSvc.turnList.forEach(turn => {
+      let tdate=this.convertDateStringToDate(turn.date);
+
+      if(tdate && tdate > startD && tdate < endD && countSp[turn.doctor] === undefined)
+        countSp[turn.doctor] = 1
+      else
+      countSp[turn.doctor] +=1
+    });
+
+    let categories = Object.keys(countSp);
+    let data = categories.map(key => countSp[key]);
+  
+    return {
+      categories,
+      data
+    };
+
+  }
+  async AllTurnsEndedInRange(dateS: string, dateE: string): Promise<{ categories: string[], data: number[] }>
+  {
+    await this.scheduleSvc.getTurns();
+
+    let startD = this.convertDateStringToDate(dateS);
+    let endD = this.convertDateStringToDate(dateE);
+    
+    let countSp: { [key: string]: number } = {};
+    
+    if (!startD || !endD) {
+      let categories = Object.keys(countSp);
+      let data = categories.map(key => countSp[key]);
+      return {categories,data}; // Or throw an error, depending on your error handling strategy.
+    }
+
+
+    this.scheduleSvc.turnList.forEach(turn => {
+      console.log(turn);
+      let tdate=this.convertDateStringToDate(turn.date);
+
+      if (turn.status == "Finalizado") {
+        if (tdate && tdate > startD && tdate < endD && countSp[turn.doctor] === undefined) {
+          countSp[turn.doctor] = 1
+        }
+        else {
+          countSp[turn.doctor] += 1;
+        }
+      }
+
+      //console.log(countSp[turn.doctor]);
+
+    });
+
+    let categories = Object.keys(countSp);
+    let data = categories.map(key => countSp[key]);
+  
+    return {
+      categories,
+      data
+    };
+
+  }
+
+
   async turnsAskedInRange(dateS: string, dateE: string, medic: string)
   {
     let startD = this.convertDateStringToDate(dateS);

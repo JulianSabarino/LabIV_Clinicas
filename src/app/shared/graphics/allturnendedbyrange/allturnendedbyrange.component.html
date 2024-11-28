@@ -1,0 +1,36 @@
+<div class="container d-flex align-items-center justify-content-center">
+
+    <div class="col-md-7 col-lg-8">
+
+        <h5 class="row">Solicitudes a por Rango</h5>
+
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <label for="firstName" class="form-label">Inicio</label>
+                <input type="date" class="form-control" id="firstName" placeholder="" value="" required=""
+                    fdprocessedid="6ifca" [(ngModel)]="dateStart" (change)="selectRange()">
+            </div>
+
+            <div class="col-sm-6">
+                <label for="lastName" class="form-label">Final</label>
+                <input type="date" class="form-control" id="lastName" placeholder="" value="" required=""
+                    fdprocessedid="0ngn3i" [(ngModel)]="dateEnd" (change)="selectRange()">
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+<div *ngIf="chartData && chartData.categories && chartData.data" style="margin-top: 2vh;">
+
+    <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" style="height: 30vh; display: block;">
+    </highcharts-chart>
+</div>
+
+
+
