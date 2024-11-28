@@ -1,9 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { HighchartsChartModule } from 'highcharts-angular';
-import * as Highcharts from 'highcharts';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GraphsService } from '../../../services/graphs.service';
+
+import * as Highcharts from 'highcharts';
+import Exporting from 'highcharts/modules/exporting';
+
+Exporting(Highcharts);
+
 
 @Component({
   selector: 'app-allturnendedbyrange',
@@ -15,6 +20,8 @@ import { GraphsService } from '../../../services/graphs.service';
 export class AllturnendedbyrangeComponent {
 
   graphSvc = inject(GraphsService);
+
+  
 
   Highcharts = Highcharts;  // Set Highcharts object
   chartOptions: Highcharts.Options = {};  // Initialize empty chart options
@@ -56,7 +63,15 @@ export class AllturnendedbyrangeComponent {
         name: 'Turnos',
         data: this.chartData?.data,
         type: 'column'  // Data (number of turns per speciality)
-      }]
+      }],
+      exporting: {
+        enabled: true,  // Enable export functionality
+        buttons: {
+          contextButton: {
+            menuItems: ['printChart', 'downloadPDF', 'downloadPNG', 'downloadJPEG', 'downloadSVG']
+          }
+        }
+      }
     };
   }
 
@@ -83,5 +98,27 @@ export class AllturnendedbyrangeComponent {
     }
     return `${parts[2]}/${parts[1]}/${parts[0]}`;
   }
+
+
+  chartInstance: Highcharts.Chart | null = null;
+
+  onChartInstance(chart: Highcharts.Chart) {
+    this.chartInstance = chart;  // Save the chart instance
+  }
+
+  downloadPDF() {
+    if (this.chartInstance) {
+      // Cast the chartInstance to Highcharts.Chart to access the exportChart method
+      (this.chartInstance as Highcharts.Chart).exportChart(
+        {
+          type: 'application/pdf',  // Specify the format for PDF
+          // Additional exporting options can be added here, like filename, etc.
+        },
+        this.chartOptions // Pass the chartOptions as the second argument
+      );
+    } else {
+      console.error('Chart instance is not available');
+    }
+  }  
 
 }

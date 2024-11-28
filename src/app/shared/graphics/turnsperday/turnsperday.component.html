@@ -1,9 +1,12 @@
 <div *ngIf="chartData && chartData.categories && chartData.data">
 
     <highcharts-chart
-        [Highcharts]="Highcharts"
-        [options]="chartOptions"
-        style="height: 30vh; display: block;">
+    [Highcharts]="Highcharts"
+    [options]="chartOptions"
+    (chartInstance)="onChartInstance($event)"
+    style="height: 30vh; display: block;">
     </highcharts-chart>
+
+    <button class="w-100 btn btn-primary" style="margin-top: 1vh;" (click)="downloadPDF()">Download PDF</button>
     
     </div>

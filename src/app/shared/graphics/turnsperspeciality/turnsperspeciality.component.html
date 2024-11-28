@@ -3,6 +3,10 @@
     <highcharts-chart
     [Highcharts]="Highcharts"
     [options]="chartOptions"
+    (chartInstance)="onChartInstance($event)"
     style="height: 30vh; display: block;">
-</highcharts-chart>
+    </highcharts-chart>
+
+    <button class="w-100 btn btn-primary" style="margin-top: 1vh;" (click)="downloadPDF()">Download PDF</button>
+    
 </div>

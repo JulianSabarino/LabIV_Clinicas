@@ -19,17 +19,20 @@
 
         </div>
 
-
-
-
     </div>
 
 </div>
 
 <div *ngIf="chartData && chartData.categories && chartData.data" style="margin-top: 2vh;">
 
-    <highcharts-chart [Highcharts]="Highcharts" [options]="chartOptions" style="height: 30vh; display: block;">
+    <highcharts-chart
+    [Highcharts]="Highcharts"
+    [options]="chartOptions"
+    (chartInstance)="onChartInstance($event)"
+    style="height: 30vh; display: block;">
     </highcharts-chart>
+
+    <button class="w-100 btn btn-primary" style="margin-top: 1vh;" (click)="downloadPDF()">Download PDF</button>
 </div>
 
 
