@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../../models/user/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { SupabaseService } from '../../../services/supabase.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -18,10 +20,13 @@ export class RegisterComponent {
   countryList!: any[];
   utilsService = inject(UtilsService);
   authService = inject(AuthService);
+  supaService = inject(SupabaseService)
   spinner = inject(NgxSpinnerService);
+  toastr = inject(ToastrService);
 
 
   selectedCountry: string | null = null;
+  myPhoto?: File;
   
 
   form = new FormGroup({
@@ -50,6 +55,16 @@ export class RegisterComponent {
   async register()
   {
     this.spinner.show();
+
+    let savedPhoto = "";
+
+    if (this.myPhoto) {
+      savedPhoto = await this.supaService.uploadImage(this.myPhoto);
+      
+      console.log(savedPhoto);
+      //this.imagen = file
+  }
+
     if(this.form.valid)
     {
       let user: User = 
@@ -62,7 +77,7 @@ export class RegisterComponent {
         medic: false,
         admin: false,
         info: [this.form.value.obraSocial],
-        image:["",""]
+        image:[savedPhoto,""]
       }
       //console.log(user);
 
@@ -87,13 +102,16 @@ export class RegisterComponent {
 
   async saveImage(event: any)
   {
-    const file = event.target.files[0];
-    if (file) {
-      let savedPhoto = await this.authService.savePhoto(file,"userPhotos");
-      
-      console.log(savedPhoto);
-      //this.imagen = file
-  }
+    this.myPhoto = event.target.files[0];
+    if(this.myPhoto?.type != 'image/jpeg')
+    {
+      this.toastr.error("Elija un archivo correcto");
+      this.myPhoto = undefined;
+    }
+    else
+    {
+      this.toastr.success("Imagen seleccionada correctamente");
+    }
 }
 
   

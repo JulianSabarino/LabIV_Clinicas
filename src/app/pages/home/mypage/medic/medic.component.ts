@@ -8,11 +8,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Turn, TurnDetailed } from '../../../../models/user/turn.model';
 import { UserturnlistComponent } from '../../../../shared/userturnlist/userturnlist.component';
 import { MatDialog } from '@angular/material/dialog';
+import { BackgroundimageComponent } from '../../../../shared/backgroundimage/backgroundimage.component';
 
 @Component({
   selector: 'app-medic',
   standalone: true,
-  imports: [CommonModule,NgxSpinnerModule],
+  imports: [CommonModule,NgxSpinnerModule,BackgroundimageComponent],
   templateUrl: './medic.component.html',
   styleUrl: './medic.component.scss'
 })

@@ -9,6 +9,8 @@ import { EspecialidadesService } from '../../../services/especialidades.service'
 import { Especialidades } from '../../../models/user/medicspeciality.model';
 import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 import { RechaptchaService } from '../../../services/rechaptcha.service';
+import { ToastrService } from 'ngx-toastr';
+import { SupabaseService } from '../../../services/supabase.service';
 
 
 
@@ -28,13 +30,15 @@ export class RegisterdoctorComponent implements OnInit{
   captchaSvc = inject(RechaptchaService);
   claveWeb:string="";
   isCaptchaLoaded: boolean = false;
-
+  toastr = inject(ToastrService);
+  supaService = inject(SupabaseService)
 
   selectedCountry: string | null = null;
   
   isMedic: boolean = false;
 
   especialidades:Especialidades[] = []
+  myPhoto?: File;
 
   form = new FormGroup({
     mail: new FormControl('',[Validators.required,Validators.email]),
@@ -70,6 +74,16 @@ export class RegisterdoctorComponent implements OnInit{
   async register()
   {
     this.spinner.show();
+
+    let savedPhoto = "";
+
+    if (this.myPhoto) {
+      savedPhoto = await this.supaService.uploadImage(this.myPhoto);
+      
+      console.log(savedPhoto);
+      //this.imagen = file
+  }
+
     if(this.form.valid)
     {
       let infoUser: any[] = [];
@@ -87,7 +101,7 @@ export class RegisterdoctorComponent implements OnInit{
         medic: this.isMedic,
         admin: false,
         info: infoUser,
-        image:["",""]
+        image:[savedPhoto,""]
       }
       //console.log(user);
 
@@ -113,15 +127,17 @@ export class RegisterdoctorComponent implements OnInit{
 
   async saveImage(event: any)
   {
-    const file = event.target.files[0];
-    if (file) {
-      let savedPhoto = await this.authService.savePhoto(file,"userPhotos");
-      
-      console.log(savedPhoto);
-      //this.imagen = file
+    this.myPhoto = event.target.files[0];
+    if(this.myPhoto?.type != 'image/jpeg')
+    {
+      this.toastr.error("Elija un archivo correcto");
+      this.myPhoto = undefined;
+    }
+    else
+    {
+      this.toastr.success("Imagen seleccionada correctamente");
+    }
   }
-}
-
 
   addRemoveSpeciality(especialidad: any) {
     
