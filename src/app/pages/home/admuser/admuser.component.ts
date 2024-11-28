@@ -27,6 +27,8 @@ import { ScheduleService } from '../../../services/schedule.service';
 import { TurnDetailed } from '../../../models/user/turn.model';
 import { UserturnlistComponent } from '../../../shared/userturnlist/userturnlist.component';
 import { GraphicsComponent } from '../../../shared/graphics/graphics.component';
+import * as XLSX from 'xlsx'; // Import the XLSX library
+
 
 
 @Component({
@@ -93,6 +95,30 @@ export class AdmuserComponent implements OnInit{
     // Create a Blob and use FileSaver.js to download the CSV
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     FileSaver.saveAs(blob, 'users_data.csv');
+  }
+
+  exportExcel() {
+    const header = ['Nombre', 'Apellido', 'Email', 'Edad', 'DNI', 'Es Admin', 'Es Medico', 'Detalles'];
+    const rows = this.authService.userList.map(user => [
+      user.userInfo.name,
+      user.userInfo.surename,
+      user.userInfo.mail,
+      user.userInfo.age,
+      user.userInfo.dni,
+      user.userInfo.admin ? 'Si' : 'No',
+      user.userInfo.medic ? 'Si' : 'No',
+      user.userInfo.info.join('; ')  // Join any info array items into a single string
+    ]);
+  
+    // Create a worksheet from the rows
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([header, ...rows]);
+  
+    // Create a workbook with the worksheet
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Users');
+  
+    // Write the Excel file and trigger download
+    XLSX.writeFile(wb, 'users_data.xlsx');
   }
 
   async createAdmin()
