@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ShowhistoryComponent } from '../../../shared/showhistory/showhistory.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
+import { ShowmymediclistComponent } from '../../../shared/showmymediclist/showmymediclist.component';
 
 @Component({
   selector: 'app-mypage',
@@ -83,6 +84,24 @@ export class MypageComponent implements OnInit{
       }
     });
     //console.log(dialogRef);
+  }
+
+
+  async showMedicListModal()
+  {
+    await this.authService.getUserList();
+
+    console.log(this.myTurnsList)
+  
+    const dialogRef = this.dialog.open(ShowmymediclistComponent, {
+      backdropClass: 'no-backdrop',  // This will make the backdrop invisible
+      panelClass: 'centered-dialog', // Apply custom class for centering
+      hasBackdrop: false,  // Option
+      data: {
+        turns:this.myTurnsList,
+        userList: this.authService.userList
+      }
+    });
   }
   
 }
