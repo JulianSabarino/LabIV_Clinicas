@@ -11,7 +11,7 @@
 <div class="container" style="margin-top: 5vh;">
     <h1 class="display-5 fw-bold">Sacar Turno</h1>
 
-    <div class="d-flex w-100 justify-content-center">
+    <div class="d-flex w-100 justify-content-center" *ngIf="especialidadesSrv.especialidadesList != null"  [@upDownAnimation]>
       <div *ngFor="let especialidad of especialidadesSrv.especialidadesList">
 
         <div class="col">

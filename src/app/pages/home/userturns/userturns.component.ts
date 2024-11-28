@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
 import { CaptchaenablerDirective } from '../../../directives/captchaenabler.directive';
 import { FormsModule } from '@angular/forms';
+import { upDownAnimation } from '../../../animations/updown.animation';
 
 @Component({
   selector: 'app-userturns',
@@ -19,6 +20,9 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, NgxSpinnerModule, BackgroundimageComponent, CaptchaenablerDirective, FormsModule],
   templateUrl: './userturns.component.html',
   styleUrl: './userturns.component.scss',
+  animations: [
+    upDownAnimation
+  ]
 })
 export class UserturnsComponent implements OnInit{
   especialidadesSrv = inject(EspecialidadesService);

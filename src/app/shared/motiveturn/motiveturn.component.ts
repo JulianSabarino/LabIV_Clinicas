@@ -3,13 +3,15 @@ import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CancelturnComponent } from '../cancelturn/cancelturn.component';
+import { modalAnimation } from '../../animations/modal.animation';
 
 @Component({
   selector: 'app-motiveturn',
   standalone: true,
   imports: [FormsModule,CommonModule],
   templateUrl: './motiveturn.component.html',
-  styleUrl: './motiveturn.component.scss'
+  styleUrl: './motiveturn.component.scss',
+  animations:[modalAnimation]
 })
 export class MotiveturnComponent {
 

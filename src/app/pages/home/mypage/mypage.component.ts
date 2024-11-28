@@ -8,13 +8,15 @@ import { ShowhistoryComponent } from '../../../shared/showhistory/showhistory.co
 import { MatDialog } from '@angular/material/dialog';
 import { BackgroundimageComponent } from '../../../shared/backgroundimage/backgroundimage.component';
 import { ShowmymediclistComponent } from '../../../shared/showmymediclist/showmymediclist.component';
+import { getRotatedAnimation } from '../../../animations/getrotated.animation';
 
 @Component({
   selector: 'app-mypage',
   standalone: true,
   imports: [NgxSpinnerModule,CommonModule, BackgroundimageComponent],
   templateUrl: './mypage.component.html',
-  styleUrl: './mypage.component.scss'
+  styleUrl: './mypage.component.scss',
+  animations:[getRotatedAnimation]
 })
 export class MypageComponent implements OnInit{
   authService = inject(AuthService);
