@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { EspecialidadesService } from '../../../services/especialidades.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AuthService } from '../../../services/auth.service';
-import { user } from '@angular/fire/auth';
 import { Especialidades } from '../../../models/user/medicspeciality.model';
 import { ScheduleService } from '../../../services/schedule.service';
 import { TurnDetailed } from '../../../models/user/turn.model';
@@ -129,6 +127,7 @@ export class UserturnsComponent implements OnInit{
   });
 
   this.formattedTurns.sort((a, b) => {
+    //consider trying to use a separate function
     // Ensure that the date strings are in MM/DD/YYYY format before creating Date objects
     const dateA = new Date(`${a.date.split('/')[1]}/${a.date.split('/')[0]}/${a.date.split('/')[2]}`); // MM/DD/YYYY
     const dateB = new Date(`${b.date.split('/')[1]}/${b.date.split('/')[0]}/${b.date.split('/')[2]}`); // MM/DD/YYYY

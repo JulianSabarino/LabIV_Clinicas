@@ -39,7 +39,6 @@ export class MedicComponent implements OnInit{
     await this.especialitiesService.getEspecialidadesList();
     await this.scheduleService.getTurns();
     await this.especialitiesService.getLoggedEspecialidadesList(this.authService.userProfile);
-    //console.log(this.authService.userProfile);
     console.log(this.especialitiesService.loggedEspecialities);
 
     console.log(this.authService.userList);
@@ -74,7 +73,6 @@ export class MedicComponent implements OnInit{
     let speciality = this.especialitiesService.loggedEspecialities.find(speciality => speciality.name === this.selectedEspecialidad.name);
     let isWorkHour = false;
 
-    //console.log(speciality);
     speciality?.turns.forEach(turn => {
       if(turn.day === day && turn.turn === hour)
         isWorkHour =  true

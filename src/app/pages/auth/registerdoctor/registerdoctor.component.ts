@@ -81,7 +81,6 @@ export class RegisterdoctorComponent implements OnInit{
       savedPhoto = await this.supaService.uploadImage(this.myPhoto);
       
       console.log(savedPhoto);
-      //this.imagen = file
   }
 
     if(this.form.valid)
@@ -103,7 +102,6 @@ export class RegisterdoctorComponent implements OnInit{
         info: infoUser,
         image:[savedPhoto,""]
       }
-      //console.log(user);
 
       try
       {

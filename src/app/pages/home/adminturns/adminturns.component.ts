@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
-import { SpecialityfilterPipe } from '../../../pipes/specialityfilter.pipe';
 import { FormsModule } from '@angular/forms';
 import { ScheduleService } from '../../../services/schedule.service';
 import { ToastrService } from 'ngx-toastr';

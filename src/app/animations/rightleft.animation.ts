@@ -1,6 +1,8 @@
 import { trigger, group, style, animate, transition, query, animateChild, stagger } from '@angular/animations';
 
 /*
+
+This does not function if there are too many elements in the dom
 export const rightLeftAnimation = 
 [
     trigger('rightLeftAnimation', [ 

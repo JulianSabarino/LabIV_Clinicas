@@ -10,7 +10,7 @@ import { AllturnendedbyrangeComponent } from '../../../../shared/graphics/alltur
 @Component({
   selector: 'app-graphics',
   standalone: true,
-  imports: [BackgroundimageComponent,TurnsperspecialityComponent,TurnsperdayComponent,TurnsaskedbyrangeComponent, TurnsfinishedbyrangeComponent,AllturnsaskedbyrangeComponent,AllturnendedbyrangeComponent],
+  imports: [BackgroundimageComponent,TurnsperspecialityComponent,TurnsperdayComponent,AllturnsaskedbyrangeComponent,AllturnendedbyrangeComponent],
   templateUrl: './graphics.component.html',
   styleUrl: './graphics.component.scss'
 })

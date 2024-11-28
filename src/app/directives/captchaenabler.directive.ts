@@ -9,7 +9,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CaptchaenablerDirective {
 
-//  @Input('appCaptchaenabler')
   dialog = inject(MatDialog);
   toastSvc = inject(ToastrService)
 
@@ -17,11 +16,14 @@ export class CaptchaenablerDirective {
 
   async ngOnInit() {
     const dialogRef = this.dialog.open(MycaptchaComponent, {
-      backdropClass: 'no-backdrop',  // This will make the backdrop invisible
-      panelClass: 'centered-dialog', // Apply custom class for centering
-      hasBackdrop: false,  // Option
+      backdropClass: 'no-backdrop', 
+      panelClass: 'centered-dialog', 
+      hasBackdrop: false,  
     });
     console.log(dialogRef);
+
+
+    //checks the state of the captcha component after it closes. If its alright, enables the component.
 
     dialogRef.afterClosed().subscribe(async result => {
       console.log('The dialog was closed');

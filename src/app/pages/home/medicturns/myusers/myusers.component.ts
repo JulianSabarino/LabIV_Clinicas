@@ -20,7 +20,6 @@ export class MyusersComponent implements OnInit{
 
 
   authService = inject(AuthService);
-  //especialitiesService = inject(EspecialidadesService);
   scheduleService = inject(ScheduleService);
   spinner = inject(NgxSpinnerService);
   toastSvc = inject(ToastrService);
@@ -35,11 +34,7 @@ export class MyusersComponent implements OnInit{
     this.spinner.show();
 
     await this.authService.getUserList();
-    //await this.especialitiesService.getEspecialidadesList();
     await this.scheduleService.getTurns();
-    //await this.especialitiesService.getLoggedEspecialidadesList(this.authService.userProfile);
-    //console.log(this.authService.userProfile);
-    //console.log(this.especialitiesService.loggedEspecialities);
 
     console.log(this.authService.userList);
 

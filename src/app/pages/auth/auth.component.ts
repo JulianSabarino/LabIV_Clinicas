@@ -50,7 +50,6 @@ export class AuthComponent implements OnInit{
     }
      
     this.spinner.hide();
-    //const res = this.localStorage.login(this.formLogin.value)?"usuario logeado":"no se encontro el usuario"*/
   }
 
   accesoRapido(email: string, password: string) {

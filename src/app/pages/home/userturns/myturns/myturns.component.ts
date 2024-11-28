@@ -4,7 +4,6 @@ import { ScheduleService } from '../../../../services/schedule.service';
 import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { SpecialityfilterPipe } from '../../../../pipes/specialityfilter.pipe';
 import { FormsModule } from '@angular/forms';
 import { CancelturnComponent } from '../../../../shared/cancelturn/cancelturn.component';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
@@ -78,7 +77,6 @@ export class MyturnsComponent implements OnInit{
       if (result !== undefined) {
         this.spinner.show();
         this.cancelComentary  = result;
-        //await this.scheduleSvc.cancelTurn(turn,this.cancelComentary);
         await this.scheduleSvc.advanceTurn(turn,this.cancelComentary,"Cancelado")
         this.toastSvc.success("Turno cancelado con exito","Cancelación de Turno");
         await this.scheduleSvc.getTurns();
@@ -106,7 +104,6 @@ export class MyturnsComponent implements OnInit{
       panelClass: 'centered-dialog', // Apply custom class for centering
       hasBackdrop: false,  // Option
     });
-    //console.log(dialogRef);
 
     dialogRef.afterClosed().subscribe(async result => {
       console.log('The dialog was closed');
@@ -114,7 +111,6 @@ export class MyturnsComponent implements OnInit{
         this.spinner.show();
         let reviewComment  = result;
         console.log(turn);
-        //await this.scheduleSvc.reviewTurn(turn,reviewComment);
         await this.scheduleSvc.advanceTurn(turn,reviewComment,"Finalizado");
         this.toastSvc.success("Reseña entregada","Reseña");
         await this.scheduleSvc.getTurns();
@@ -135,7 +131,6 @@ export class MyturnsComponent implements OnInit{
       hasBackdrop: false,  // Option
       data: {turn:turn}
     });
-    //console.log(dialogRef);
   }
 
 }

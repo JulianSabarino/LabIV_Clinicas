@@ -6,7 +6,6 @@ import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import { SpecialityfilterPipe } from '../../../pipes/specialityfilter.pipe';
 import { FormsModule } from '@angular/forms';
 import { MotiveturnComponent } from '../../../shared/motiveturn/motiveturn.component';
 import { CloseturnComponent } from '../../../shared/closeturn/closeturn.component';
@@ -76,7 +75,6 @@ export class MedicturnsComponent implements OnInit{
       if (result !== undefined) {
         this.spinner.show();
         this.cancelComentary  = result;
-        //await this.scheduleSvc.declineTurn(turn,this.cancelComentary);
         await this.scheduleSvc.advanceTurn(turn,this.cancelComentary,"Rechazado");
         await this.scheduleSvc.getTurns();
         await this.loadTurns();

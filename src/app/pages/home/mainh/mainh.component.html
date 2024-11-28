@@ -1,1 +1,14 @@
-<p>mainh works!</p>
+<div class="container" style="border-radius: 3vh; border: 2px solid lightblue; background-color: white;" *ngIf="frase>=0">
+    <div [@rightLeftAnimation] >
+
+        <div>
+          <div class="align-items-center" style="text-align: center;">
+            <h1>Inicio de Sesión Satisfactorio</h1>
+            <p class="lead"> {{frasesList[frase].text}}</p>
+          </div>
+        </div>
+  
+    </div>
+  </div>
+  
+  <app-backgroundimage></app-backgroundimage>

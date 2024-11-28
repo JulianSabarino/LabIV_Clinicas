@@ -1,15 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
-import { SpecialityfilterPipe } from '../../../../pipes/specialityfilter.pipe';
 import { FormsModule } from '@angular/forms';
 import { ScheduleService } from '../../../../services/schedule.service';
 import { AuthService } from '../../../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
-import { CancelturnComponent } from '../../../../shared/cancelturn/cancelturn.component';
-import { MotiveturnComponent } from '../../../../shared/motiveturn/motiveturn.component';
-import { ReviewturnComponent } from '../../../../shared/reviewturn/reviewturn.component';
 import { UserfilterPipe } from '../../../../pipes/userfilter.pipe';
 import { AgePipe } from '../../../../pipes/age.pipe';
 import { HighlightmedicsDirective } from '../../../../directives/highlightmedics.directive';
