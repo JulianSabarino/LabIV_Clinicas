@@ -15,12 +15,14 @@ import { jsPDF } from 'jspdf';  // Import jsPDFn
 export class ShowhistoryComponent {
 
   turn?: TurnDetailed;
+  showPDF?: boolean;
   otherList?: any[]
 
 
-  constructor(private dialogRef: MatDialogRef<ShowhistoryComponent>, @Inject(MAT_DIALOG_DATA) public data: { turn: TurnDetailed}) {
+  constructor(private dialogRef: MatDialogRef<ShowhistoryComponent>, @Inject(MAT_DIALOG_DATA) public data: { turn: TurnDetailed,showPDF?: boolean}) {
     //console.log(data.turn);
     this.turn = data.turn;
+    this.showPDF = data.showPDF ?? false;
     this.otherList = Object.entries(this.turn?.history?.other || {});
   }
 
@@ -69,7 +71,7 @@ export class ShowhistoryComponent {
       doc.setFontSize(12);
 
       // Title (from the modal)
-      doc.text(`${this.turn?.date} - ${this.turn?.turn}`, 105, 20, { align: 'center' });
+      doc.text(`${this.turn?.doctor} (${this.turn?.date} - ${this.turn?.turn})`, 105, 20, { align: 'center' });
 
       // Add rows like Altura and Peso, and Temperatura and Presion
       let yPosition = 30;

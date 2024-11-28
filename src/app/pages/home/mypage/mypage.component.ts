@@ -77,7 +77,10 @@ export class MypageComponent implements OnInit{
       backdropClass: 'no-backdrop',  // This will make the backdrop invisible
       panelClass: 'centered-dialog', // Apply custom class for centering
       hasBackdrop: false,  // Option
-      data: {turn:turn}
+      data: {
+        turn:turn,
+        showPDF: true
+      }
     });
     //console.log(dialogRef);
   }
