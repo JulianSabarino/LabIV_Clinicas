@@ -26,6 +26,8 @@
     "file-saver": "^2.0.5",
     "firebase": "^11.0.1",
     "highcharts-angular": "^4.0.1",
+    "html2pdf": "^0.0.11",
+    "jspdf": "^2.5.2",
     "ng-recaptcha": "^13.2.1",
     "ngx-spinner": "^17.0.0",
     "ngx-toastr": "^19.0.0",

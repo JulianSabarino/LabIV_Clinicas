@@ -72,7 +72,7 @@ export class MypageComponent implements OnInit{
 
   showHistory(turn: TurnDetailed)
   {
-    console.log(turn);
+    //console.log(turn);
     const dialogRef = this.dialog.open(ShowhistoryComponent, {
       backdropClass: 'no-backdrop',  // This will make the backdrop invisible
       panelClass: 'centered-dialog', // Apply custom class for centering
